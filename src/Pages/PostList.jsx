@@ -30,9 +30,13 @@ function PostList() {
     },
   ];
   const navigate = useNavigate();
-  const onClick = (event) => {
+  const onClickPost = (event) => {
     navigate(`/post/${event.target.id}`);
   };
+  const onClickForm = () => {
+    navigate(`/postform`);
+  };
+
   return (
     <div>
       <StHeader>
@@ -43,13 +47,14 @@ function PostList() {
         <p>로그인 회원가입</p>
       </StHeader>
       <StItemList>
+        <button onClick={onClickForm}>작성가자잇!</button>
         <StListName>콤퓨타</StListName>
         {data.map((item) => (
           <StItem key={item.id}>
             <StItemImg></StItemImg>
             <StItemTitle>{item.title}</StItemTitle>
-            <button onClick={onClick} id={item.id}>
-              가라잇!
+            <button onClick={onClickPost} id={item.id}>
+              상세페이지 가라잇!
             </button>
           </StItem>
         ))}
