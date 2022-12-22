@@ -8,7 +8,7 @@ function MainPage() {
       <StHeader>
         <p>토글</p>
         <p>시간</p>
-        <img src={logo} />
+        <img src={logo} alt="logo" />
         <p>날씨</p>
         <p>로그인 회원가입</p>
       </StHeader>
