@@ -4,22 +4,29 @@ import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { dbService } from '../../firebase';
 
 const initialState = {
-  posts: [],
+  comments: [],
 };
 
-export const getPosts = createAsyncThunk('getPosts', async () => {
-  const data = [];
-  const q = query(collection(dbService, 'posts'), orderBy('createAt', 'desc'));
-  const docs = await getDocs(q);
-  docs.forEach((doc) => {
-    const postData = {
-      id: doc.id,
-      ...doc.data(),
-    };
-    data.push(postData);
-  });
-  return data;
-});
+export const getComments = createAsyncThunk(
+  'getComments',
+  async (commentId) => {
+    const data = [];
+    const q = query(
+      collection(dbService, `posts/${commentId}/comment`),
+      orderBy('createAt', 'desc')
+    );
+    const docs = await getDocs(q);
+    docs.forEach((doc) => {
+      const commentData = {
+        id: doc.id,
+        ...doc.data(),
+      };
+      data.push(commentData);
+    });
+    console.log('data : ', data);
+    return data;
+  }
+);
 export const addTodo = createAsyncThunk('addTodo', async (newTodo) => {
   const data = await axios.post('http://localhost:3001/todos', newTodo);
   return data.data;
@@ -48,13 +55,14 @@ export const confirmTodo = createAsyncThunk(
   }
 );
 
-export const postModule = createSlice({
+export const commentModule = createSlice({
   name: 'Posts',
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(getPosts.fulfilled, (state, action) => {
-      state.posts = action.payload;
+    builder.addCase(getComments.fulfilled, (state, action) => {
+      state.comments = action.payload;
       state.status = 'complete';
+      console.log('payload :', action.payload);
     });
     builder.addCase(addTodo.fulfilled, (state, action) => {
       state.todos = [...state.todos, action.payload];
@@ -94,4 +102,4 @@ export const postModule = createSlice({
   },
 });
 
-export default postModule.reducer;
+export default commentModule.reducer;

@@ -1,19 +1,10 @@
-import styled from 'styled-components';
-
-function Comment({ id, comment, creator }) {
+function Comment({ id, body, creator }) {
   return (
-    <StCommentContainer>
-      <div>{id}</div>
-      <div>{comment}</div>
+    <div>
+      <div>{body}</div>
       <div>{creator}</div>
-    </StCommentContainer>
+    </div>
   );
 }
-export default Comment;
 
-const StCommentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+export default Comment;
