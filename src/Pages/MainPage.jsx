@@ -1,7 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import NewsList from "../components/NewsList";
-import logo from "../img/logo.png";
+import React from 'react';
+import styled from 'styled-components';
+import NewsList from '../components/NewsList';
+import Weather from '../components/Weather';
+import logo from '../img/logo.png';
 
 function MainPage() {
   return (
@@ -10,7 +11,7 @@ function MainPage() {
         <p>토글</p>
         <p>시간</p>
         <img src={logo} alt="logo" />
-        <p>날씨</p>
+        <Weather />
         <p>로그인 회원가입</p>
       </StHeader>
       <StItemSlider>
