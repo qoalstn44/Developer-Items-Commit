@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import NewsList from "../components/NewsList";
 import logo from "../img/logo.png";
 
 function MainPage() {
@@ -31,7 +32,7 @@ function MainPage() {
         <p>핫 픽스</p>
       </StBestViewList>
       <StSideBanner>
-        공식문서API, 라이브러리, 튜토리얼, 예제, 커뮤니티 등을 한눈에 볼 수 있는
+        <NewsList />
       </StSideBanner>
       <StFooter>
         팀이름, 팀소개, 팀원소개, 팀원이름, 팀원이메일, 팀원이미지, 팀원소개글,
