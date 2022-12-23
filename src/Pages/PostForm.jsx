@@ -1,15 +1,15 @@
 // 설명: toast-ui 기본
-import "@toast-ui/editor/dist/toastui-editor.css";
-import { Editor } from "@toast-ui/react-editor";
-import "@toast-ui/editor/dist/i18n/ko-kr";
-import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/i18n/ko-kr';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 // 설명: toast-ui color picker 플러그인
 
 // 설명: StHeader, StItemSlider 스타일링
-import logo from "../img/logo.png";
-import React from "react";
-import styled, { keyframes } from "styled-components";
+import logo from '../img/logo.png';
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 
 function PostForm() {
   return (
