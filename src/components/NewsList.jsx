@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 function NewsList() {
   const [newsData, setNewsData] = useState([]);
-  useEffect(() => {
+
+  const newsDataAPI = () => {
     axios
       .get(
         '/api/harmonydic/contents/news.json?category=digital&approved=true&page=1&pageSize=20&pagesToShow=10&range=1'
@@ -12,9 +13,15 @@ function NewsList() {
       .then((data) => {
         setNewsData(data.data.list);
       });
+  };
+  useEffect(() => {
+    newsDataAPI();
   }, []);
 
-  console.log('newsDataList : ', newsData);
+  const news = setInterval(() => {
+    newsDataAPI();
+    return clearInterval(news);
+  }, 300000);
 
   return (
     <div>
