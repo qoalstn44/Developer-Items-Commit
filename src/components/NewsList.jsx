@@ -8,7 +8,8 @@ function NewsList() {
   const newsDataAPI = () => {
     axios
       .get(
-        '/api/harmonydic/contents/news.json?category=digital&approved=true&page=1&pageSize=20&pagesToShow=10&range=1'
+        process.env.REACT_APP_DB_HOST +
+          '/api/harmonydic/contents/news.json?category=digital&approved=true&page=1&pageSize=20&pagesToShow=10&range=1'
       )
       .then((data) => {
         setNewsData(data.data.list);
