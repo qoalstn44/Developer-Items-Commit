@@ -9,7 +9,7 @@ import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 // 설명: StHeader, StItemSlider 스타일링
 import logo from "../img/logo.png";
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 function PostForm() {
   return (
