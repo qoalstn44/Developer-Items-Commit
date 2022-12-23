@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import NewsList from '../components/NewsList';
 import Weather from '../components/Weather';
 import logo from '../img/logo.png';
 
@@ -32,9 +31,7 @@ function MainPage() {
         <p>핫 픽스</p>
         <p>핫 픽스</p>
       </StBestViewList>
-      <StSideBanner>
-        <NewsList />
-      </StSideBanner>
+      <StSideBanner>이곳은 배너부분</StSideBanner>
       <StFooter>
         팀이름, 팀소개, 팀원소개, 팀원이름, 팀원이메일, 팀원이미지, 팀원소개글,
       </StFooter>
