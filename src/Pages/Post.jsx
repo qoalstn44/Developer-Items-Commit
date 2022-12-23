@@ -1,14 +1,16 @@
-import {useNavigate, useParams} from "react-router-dom";
-import styled from "styled-components";
-import backButton from "../img/x.png";
-import logo from "../img/logo.png";
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import backButton from '../img/x.png';
+import logo from '../img/logo.png';
+import Comment from '../components/Comment';
+import { useState } from 'react';
 
 function Post() {
   // 아래 부분은 firebase에서 데이터를 가져올 부분.
   const data = [
     {
       id: 1,
-      title: "1111111",
+      title: '1111111',
       body: `1111111 볼드모트의 살인 저주로부터 생존한 유일한 인물. 일명 살아남은 아이다. 생년월일은 1980년 7월 31일.
 			해리의 가족은 아버지 제임스 포터, 어머니 릴리 포터, 두 부모가 임명한 대부 시리우스 블랙이 있다.
 			론 위즐리, 헤르미온느 그레인저는 해리의 가장 소중한 친구이며, 론 위즐리의 부모인 아서 위즐리와 몰리 위즐리는 해리에게 양부모나 다름없는 사람들이다.
@@ -18,7 +20,7 @@ function Post() {
     },
     {
       id: 2,
-      title: "22222222",
+      title: '22222222',
       body: `22222222 볼드모트의 살인 저주로부터 생존한 유일한 인물. 일명 살아남은 아이다. 생년월일은 1980년 7월 31일.
 			해리의 가족은 아버지 제임스 포터, 어머니 릴리 포터, 두 부모가 임명한 대부 시리우스 블랙이 있다.
 			론 위즐리, 헤르미온느 그레인저는 해리의 가장 소중한 친구이며, 론 위즐리의 부모인 아서 위즐리와 몰리 위즐리는 해리에게 양부모나 다름없는 사람들이다.
@@ -28,7 +30,7 @@ function Post() {
     },
     {
       id: 3,
-      title: "333333333",
+      title: '333333333',
       body: `33333333 볼드모트의 살인 저주로부터 생존한 유일한 인물. 일명 살아남은 아이다. 생년월일은 1980년 7월 31일.
 			해리의 가족은 아버지 제임스 포터, 어머니 릴리 포터, 두 부모가 임명한 대부 시리우스 블랙이 있다.
 			론 위즐리, 헤르미온느 그레인저는 해리의 가장 소중한 친구이며, 론 위즐리의 부모인 아서 위즐리와 몰리 위즐리는 해리에게 양부모나 다름없는 사람들이다.
@@ -38,7 +40,7 @@ function Post() {
     },
     {
       id: 4,
-      title: "4444444444",
+      title: '4444444444',
       body: `44444444 볼드모트의 살인 저주로부터 생존한 유일한 인물. 일명 살아남은 아이다. 생년월일은 1980년 7월 31일.
 			해리의 가족은 아버지 제임스 포터, 어머니 릴리 포터, 두 부모가 임명한 대부 시리우스 블랙이 있다.
 			론 위즐리, 헤르미온느 그레인저는 해리의 가장 소중한 친구이며, 론 위즐리의 부모인 아서 위즐리와 몰리 위즐리는 해리에게 양부모나 다름없는 사람들이다.
@@ -47,14 +49,39 @@ function Post() {
 			호그와트에 오기 전까지 본인은 전혀 몰랐지만, 갓난아기 때 어둠의 마왕을 몰락시켰기에[19] 이 사실 하나만으로도 마법사 세계에서 영웅시되고 있었다. 그래서 머글 세계에서 살던 때에도 갑자기 이상한 옷차림을 한 남자가 자기에게 반갑다며 격하게 악수를 하고 가는 등의 일을 겪었으며, 해리가 살아남았다는 점은 마법사들을 넘어 도비 같은 집요정들에게도 희망이 되었던 듯하다. 자신은 이 일에 대해 기억하지 못하고 있으나, 녹색 섬광이 번쩍이는 기억이 났다고 하는 걸 보면, 그날 있었던 일을 아예 모르는 것은 아닌 듯하다. 해리는 이모 부부의 거짓말에 의해 해그리드를 만나기 전까진 부모님이 교통사고로 죽었다고 생각했다. 하지만 이모 부부도 해리가 마법사인 걸 시기하고 있었기 때문에 해리를 학대한 것인가 싶다.[20]`,
     },
   ];
-
+  const commentData = [
+    {
+      id: 1,
+      comment: '1 comment',
+      creator: 'kim',
+    },
+    {
+      id: 2,
+      comment: '2 comment',
+      creator: 'lee',
+    },
+    {
+      id: 3,
+      comment: '3 comment',
+      creator: 'park',
+    },
+    {
+      id: 4,
+      comment: '4 comment',
+      creator: 'choi',
+    },
+  ];
+  const [toggle, setToggle] = useState(false);
+  const onClickToggle = () => {
+    setToggle(!toggle);
+  };
   const param = useParams();
   const navigate = useNavigate();
 
   const post = data.find((item) => item.id === parseInt(param.id));
 
   const onClickBack = () => {
-    navigate("/postlist");
+    navigate('/postlist');
   };
 
   return (
@@ -78,6 +105,16 @@ function Post() {
           />
         </StPostHeader>
         <p>{post.body}</p>
+        <button onClick={onClickToggle}>댓글 열기</button>
+        {toggle
+          ? commentData.map((data) => (
+              <Comment
+                id={data.id}
+                comment={data.comment}
+                creator={data.creator}
+              />
+            ))
+          : null}
       </StPost>
     </div>
   );
