@@ -6,27 +6,38 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import { useRef } from 'react';
 
+
 // 설명: useState
 import { useState } from 'react';
 // 설명: modules
 import { addPost, getPosts } from '../redux/modules/postModule';
+
+
 // 설명: StHeader, StItemSlider 스타일링
 import logo from '../img/logo.png';
 import React from 'react';
 import styled from 'styled-components';
+
 import { useDispatch } from 'react-redux';
+
+
+// 설명: 뒤로가기 버튼 클릭시 경로 이동
 
 const onClickPostList = () => {
   window.location.href = '/postlist';
 };
-
+// 설명: 뒤로가기 버튼 클릭시 경고창 띄우기
 const onRemove = () => {
-  if (window.confirm('정말 삭제하시겠습니까?')) {
+  if (
+    window.confirm(
+      '뒤로가면 지금까지 작성하신 글이 삭제됩니다! 정말 뒤로가시겠습니까?'
+    )
+  ) {
     // 삭제 로직
     alert('삭제되었습니다.');
     onClickPostList();
   } else {
-    alert('삭제가 취소되었습니다.');
+    alert('뒤로가기가 취소되었습니다.');
   }
 };
 // 설명: useState

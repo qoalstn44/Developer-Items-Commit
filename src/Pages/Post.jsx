@@ -5,14 +5,14 @@ import logo from '../img/logo.png';
 import CommentList from '../components/CommentList';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getComments } from '../redux/modules/commentModule';
+import { getComment } from '../redux/modules/commentModule';
 
 function Post() {
   const [toggle, setToggle] = useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getComments(postItemData.id));
+    dispatch(getComment(postItemData.id));
   }, []);
 
   const globalPostData = useSelector((state) => state.postModule.posts);
@@ -24,7 +24,6 @@ function Post() {
   const navigate = useNavigate();
 
   const postItemData = globalPostData.find((item) => item.id === param.id);
-  console.log('postItemData.id :', postItemData.id);
 
   const onClickBack = () => {
     navigate('/postlist');
@@ -52,7 +51,7 @@ function Post() {
         </StPostHeader>
         <p>{postItemData.body}</p>
         <button onClick={onClickToggle}>댓글 열기</button>
-        {toggle ? <CommentList /> : null}
+        {toggle ? <CommentList postId={postItemData.id} /> : null}
       </StPost>
     </div>
   );

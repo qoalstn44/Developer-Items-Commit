@@ -1,36 +1,49 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { dbService } from '../../firebase';
+import {
+  addDoc,
+  collection,
+  getDocs,
+  orderBy,
+  query,
+} from 'firebase/firestore';
+import { authService, dbService } from '../../firebase';
 
 const initialState = {
   comments: [],
 };
 
-export const getComments = createAsyncThunk(
-  'getComments',
-  async (commentId) => {
-    const data = [];
-    const q = query(
-      collection(dbService, `posts/${commentId}/comment`),
-      orderBy('createAt', 'desc')
-    );
-    const docs = await getDocs(q);
-    docs.forEach((doc) => {
-      const commentData = {
-        id: doc.id,
-        ...doc.data(),
-      };
-      data.push(commentData);
-    });
-    console.log('data : ', data);
-    return data;
+export const getComment = createAsyncThunk('getComment', async (commentId) => {
+  const data = [];
+  const q = query(
+    collection(dbService, `posts/${commentId}/comment`),
+    orderBy('createAt', 'desc')
+  );
+  const docs = await getDocs(q);
+  docs.forEach((doc) => {
+    const commentData = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    data.push(commentData);
+  });
+  return data;
+});
+
+export const addComment = createAsyncThunk(
+  'addComment',
+  async ({ postId, comment }) => {
+    const commentData = {
+      createAt: Date.now(),
+      creator: 'kim',
+      body: comment,
+      // displayName: authService.currentUser.displayName,
+      // photoURL: authService.currentUser.photoURL,
+    };
+    await addDoc(collection(dbService, `posts/${postId}/comment`), commentData);
+    return commentData;
   }
 );
-export const addTodo = createAsyncThunk('addTodo', async (newTodo) => {
-  const data = await axios.post('http://localhost:3001/todos', newTodo);
-  return data.data;
-});
 export const deleteTodo = createAsyncThunk('deleteTodo', async (todoId) => {
   await axios.delete(`http://localhost:3001/todos/${todoId}`);
   return todoId;
@@ -59,14 +72,14 @@ export const commentModule = createSlice({
   name: 'Posts',
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(getComments.fulfilled, (state, action) => {
+    builder.addCase(getComment.fulfilled, (state, action) => {
       state.comments = action.payload;
       state.status = 'complete';
-      console.log('payload :', action.payload);
     });
-    builder.addCase(addTodo.fulfilled, (state, action) => {
-      state.todos = [...state.todos, action.payload];
+    builder.addCase(addComment.fulfilled, (state, action) => {
+      state.comments = [action.payload, ...state.comments];
       state.status = 'complete';
+      console.log('payload :', action.payload);
     });
     builder.addCase(deleteTodo.fulfilled, (state, action) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
