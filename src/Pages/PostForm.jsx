@@ -129,6 +129,43 @@ const StPostFormButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  & > button {
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 7000;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    overflow: hidden;
+    background: #121212;
+    color: #fff;
+    z-index: 1;
+    border: #121212;
+  }
+  & > button:after {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    background: #e0e5ec;
+    transition: all 0.3s ease;
+  }
+  & > button:hover {
+    color: #000;
+  }
+  & > button:hover:after {
+    left: 0;
+    width: 100%;
+  }
+  & > button :active {
+    top: 2px;
+  }
 `;
 const StPostTitle = styled.div`
   display: flex;
@@ -139,8 +176,8 @@ const StPostTitle = styled.div`
   & > div {
     width: 50%;
     height: 52px;
-    border: 3px solid #000;
-    background-color: black;
+    border: 3px solid #232428;
+    background-color: #232428;
     color: white;
     text-align: left;
   }
@@ -150,8 +187,8 @@ const StPostTitle = styled.div`
   & > input {
     width: 50%;
     height: 50px;
-    border: 3px solid #000;
-    background-color: black;
+    border: 3px solid #232428;
+    background-color: #232428;
     color: white;
   }
 `;
