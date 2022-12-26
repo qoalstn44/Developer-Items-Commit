@@ -49,7 +49,8 @@ const StHeader = styled.nav`
   padding: 0 20px;
   max-width: 1360px;
   margin: 0 auto;
-  background-color: #263343;
+  border: 1px solid black;
+  /* background-color: #263343; */
   @media screen and (max-width: 768px) {
     flex-direction: column;
   }
