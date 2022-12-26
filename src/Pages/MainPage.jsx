@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import Header from '../components/main/Header';
 import Slide from '../components/main/Slide';
 import { useState } from 'react';
@@ -11,6 +10,7 @@ function MainPage() {
   const [toggle, setToggle] = useState(false);
 
   return (
+    // 메인 홈페이지 컴포넌트 분리
     <>
       <Header toggle={toggle} setToggle={setToggle} />
       <hr />
