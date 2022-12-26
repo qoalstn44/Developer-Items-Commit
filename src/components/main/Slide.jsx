@@ -123,7 +123,7 @@ const StContainer = styled.div`
   border: 1px solid black;
   margin: auto;
   margin-bottom: 40px;
-  width: 80%;
+  width: 50%;
 `;
 
 export default Slide;
