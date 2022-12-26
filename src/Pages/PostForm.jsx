@@ -16,12 +16,16 @@ const onClickPostList = () => {
 };
 
 const onRemove = () => {
-  if (window.confirm('정말 삭제하시겠습니까?')) {
+  if (
+    window.confirm(
+      '뒤로가면 지금까지 작성하신 글이 삭제됩니다! 정말 뒤로가시겠습니까?'
+    )
+  ) {
     // 삭제 로직
     alert('삭제되었습니다.');
     onClickPostList();
   } else {
-    alert('삭제가 취소되었습니다.');
+    alert('뒤로가기가 취소되었습니다.');
   }
 };
 
