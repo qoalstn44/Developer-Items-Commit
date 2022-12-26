@@ -54,10 +54,10 @@ class Slide extends Component {
       speed: 1000,
       responsive: [
         {
-          nextArrow: false,
-          prevArrow: false,
           breakpoint: 768,
           settings: {
+            nextArrow: false,
+            prevArrow: false,
             slidesToShow: 1,
             slidesToScroll: 1,
             speed: 1000,
@@ -123,7 +123,10 @@ const StContainer = styled.div`
   border: 1px solid black;
   margin: auto;
   margin-bottom: 40px;
-  width: 80%;
+  width: 70%;
+  @media screen and (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 export default Slide;
