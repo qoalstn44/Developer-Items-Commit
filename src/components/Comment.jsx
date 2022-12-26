@@ -26,7 +26,6 @@ function Comment({ postId, commentId, body, creator }) {
   const updateSubmitComment = (event) => {
     event.preventDefault();
     dispatch(updateComment({ postId, commentId, newBody }));
-    console.log(commentId);
     setToggle(!toggle);
   };
 

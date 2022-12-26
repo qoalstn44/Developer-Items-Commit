@@ -53,7 +53,6 @@ export const updateComment = createAsyncThunk(
     await updateDoc(doc(dbService, `posts/${postId}/comment/${commentId}`), {
       body: newBody,
     });
-    console.log('commentId : ', commentId);
     return { commentId, newBody };
   }
 );

@@ -18,7 +18,6 @@ function CommentList({ postId }) {
     dispatch(addComment({ postId, comment }));
     setComment('');
   };
-  console.log('globalComment:', globalComment);
 
   return (
     <StCommentContainer>
