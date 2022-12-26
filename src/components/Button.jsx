@@ -15,12 +15,11 @@ const SIZES = {
     height: 400px;
   `,
 };
-function Button({ disabled, size, children }) {
+function Button({ disabled, size, children, onClick }) {
   const sizeStyle = SIZES[size];
-  console.log(sizeStyle);
 
   return (
-    <StyledButton disabled={disabled} sizeStyle={sizeStyle}>
+    <StyledButton disabled={disabled} sizeStyle={sizeStyle} onClick={onClick}>
       {children}
     </StyledButton>
   );
