@@ -6,12 +6,10 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import { useRef } from 'react';
 
-
 // 설명: useState
 import { useState } from 'react';
 // 설명: modules
 import { addPost, getPosts } from '../redux/modules/postModule';
-
 
 // 설명: StHeader, StItemSlider 스타일링
 import logo from '../img/logo.png';
@@ -19,29 +17,27 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-
-// 설명: 뒤로가기 버튼 클릭시 경로 이동
-
-const onClickPostList = () => {
-  window.location.href = '/postlist';
-};
-// 설명: 뒤로가기 버튼 클릭시 경고창 띄우기
-const onRemove = () => {
-  if (
-    window.confirm(
-      '뒤로가면 지금까지 작성하신 글이 삭제됩니다! 정말 뒤로가시겠습니까?'
-    )
-  ) {
-    // 삭제 로직
-    alert('삭제되었습니다.');
-    onClickPostList();
-  } else {
-    alert('뒤로가기가 취소되었습니다.');
-  }
-};
 // 설명: useState
 function PostForm() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // 설명: 뒤로가기 버튼 클릭시 경고창 띄우기
+  const onRemove = () => {
+    if (
+      window.confirm(
+        '뒤로가면 지금까지 작성하신 글이 삭제됩니다! 정말 뒤로가시겠습니까?'
+      )
+    ) {
+      // 삭제 로직
+      alert('삭제되었습니다.');
+      navigate(`/postlist`);
+    } else {
+      alert('뒤로가기가 취소되었습니다.');
+    }
+  };
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const onChangeTitle = (e) => {
@@ -51,13 +47,12 @@ function PostForm() {
     const data = editorRef.current?.getInstance().getMarkdown();
     setBody(data);
   };
-  console.log(body);
-  const dispatch = useDispatch();
+
   const onClick = () => {
     if (window.confirm('정말 등록하시겠습니까?')) {
       dispatch(addPost({ title: title, body: body }));
       alert('등록되었습니다.');
-      onClickPostList();
+      navigate(`/postlist`);
     } else {
       alert('등록이 취소되었습니다.');
     }
@@ -83,7 +78,7 @@ function PostForm() {
       </StItemSlider>
       <StPostTitle>
         <input
-          maxlength="80"
+          maxLength="80"
           type="text"
           placeholder="제목을 입력해주세요.
         "
