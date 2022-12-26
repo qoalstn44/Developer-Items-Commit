@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { addComment, getComment } from '../redux/modules/commentModule';
+import { authService } from '../firebase';
+import { addComment } from '../redux/modules/commentModule';
 
 import Comment from './Comment';
 
@@ -15,10 +16,13 @@ function CommentList({ postId }) {
   };
   const onSubmitComment = (event) => {
     event.preventDefault();
+    if (authService.currentUser === null) {
+      alert('로그인을 해주세요.');
+      return;
+    }
     dispatch(addComment({ postId, comment }));
     setComment('');
   };
-
   return (
     <StCommentContainer>
       <StForm onSubmit={onSubmitComment}>
@@ -36,7 +40,8 @@ function CommentList({ postId }) {
           <Comment
             postId={postId}
             commentId={comment.id}
-            creator={comment.creator}
+            displayName={comment.displayName}
+            userUID={comment.userUID}
             body={comment.body}
           />
         </div>
