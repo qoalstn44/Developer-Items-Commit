@@ -9,7 +9,7 @@ import {
   query,
   updateDoc,
 } from 'firebase/firestore';
-import { dbService } from '../../firebase';
+import { authService, dbService } from '../../firebase';
 
 const initialState = {
   comments: [],
@@ -39,9 +39,9 @@ export const addComment = createAsyncThunk(
     const commentData = {
       createAt: Date.now(),
       creator: 'kim',
+      displayName: authService.currentUser.displayName,
+      userUID: authService.currentUser.uid,
       body: comment,
-      // displayName: authService.currentUser.displayName,
-      // photoURL: authService.currentUser.photoURL,
     };
     await addDoc(collection(dbService, `posts/${postId}/comment`), commentData);
     return commentData;
