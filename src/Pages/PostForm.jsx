@@ -3,12 +3,26 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
+import { Editor as ToastEditor } from '@toast-ui/react-editor';
+import { useRef } from 'react';
+
+
+// 설명: useState
+import { useState } from 'react';
+// 설명: modules
+import { addPost, getPosts } from '../redux/modules/postModule';
+
 
 // 설명: StHeader, StItemSlider 스타일링
 import logo from '../img/logo.png';
 import React from 'react';
 import styled from 'styled-components';
+
+import { useDispatch } from 'react-redux';
+
+
 // 설명: 뒤로가기 버튼 클릭시 경로 이동
+
 const onClickPostList = () => {
   window.location.href = '/postlist';
 };
@@ -26,8 +40,30 @@ const onRemove = () => {
     alert('뒤로가기가 취소되었습니다.');
   }
 };
-
+// 설명: useState
 function PostForm() {
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value);
+  };
+  const onChangeBody = () => {
+    const data = editorRef.current?.getInstance().getMarkdown();
+    setBody(data);
+  };
+  console.log(body);
+  const dispatch = useDispatch();
+  const onClick = () => {
+    if (window.confirm('정말 등록하시겠습니까?')) {
+      dispatch(addPost({ title: title, body: body }));
+      alert('등록되었습니다.');
+      onClickPostList();
+    } else {
+      alert('등록이 취소되었습니다.');
+    }
+  };
+
+  const editorRef = useRef();
   return (
     <div>
       <StHeader>
@@ -45,21 +81,31 @@ function PostForm() {
         <p>의자</p>
         <p>책상</p>
       </StItemSlider>
+      <StPostTitle>
+        <input
+          maxlength="80"
+          type="text"
+          placeholder="제목을 입력해주세요.
+        "
+          onChange={onChangeTitle}
+        />
+        <div>{title}</div>
+      </StPostTitle>
       <Editor
+        ref={editorRef}
         theme="dark"
-        initialValue="글 작성 가자잇!"
+        initialValue={body}
         previewStyle="vertical"
         height="800px"
         initialEditType="markdown"
         useCommandShortcut={false}
         hideModeSwitch={true}
         language="ko-KR"
+        onChange={onChangeBody}
       />
       <StPostFormButton>
-        <button className="btn-15" onClick={onRemove}>
-          뒤로가기
-        </button>
-        <button className="btn-15">작성완료</button>
+        <button onClick={onRemove}>뒤로가기</button>
+        <button onClick={onClick}>작성완료</button>
       </StPostFormButton>
     </div>
   );
@@ -83,4 +129,29 @@ const StPostFormButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+const StPostTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align: 'left';
+
+  & > div {
+    width: 50%;
+    height: 52px;
+    border: 3px solid #000;
+    background-color: black;
+    color: white;
+    text-align: left;
+  }
+  & > input:focus {
+    outline: none;
+  }
+  & > input {
+    width: 50%;
+    height: 50px;
+    border: 3px solid #000;
+    background-color: black;
+    color: white;
+  }
 `;
