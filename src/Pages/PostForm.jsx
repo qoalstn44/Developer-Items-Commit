@@ -29,23 +29,22 @@ const onRemove = () => {
     alert('삭제가 취소되었습니다.');
   }
 };
-const onCompletion = () => {};
 // 설명: useState
 function PostForm() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const onChangeTitle = () => {
-    const data = editorRef.current?.getInstance().getMarkdown();
-    setTitle(data);
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value);
   };
   const onChangeBody = () => {
     const data = editorRef.current?.getInstance().getMarkdown();
     setBody(data);
   };
+  console.log(body);
   const dispatch = useDispatch();
   const onClick = () => {
     if (window.confirm('정말 등록하시겠습니까?')) {
-      dispatch(addPost({ title: title }));
+      dispatch(addPost({ title: title, body: body }));
       alert('등록되었습니다.');
       onClickPostList();
     } else {
@@ -71,18 +70,27 @@ function PostForm() {
         <p>의자</p>
         <p>책상</p>
       </StItemSlider>
-      <input></input>
+      <StPostTitle>
+        <input
+          maxlength="80"
+          type="text"
+          placeholder="제목을 입력해주세요.
+        "
+          onChange={onChangeTitle}
+        />
+        <div>{title}</div>
+      </StPostTitle>
       <Editor
         ref={editorRef}
         theme="dark"
-        initialValue={title}
+        initialValue={body}
         previewStyle="vertical"
         height="800px"
         initialEditType="markdown"
         useCommandShortcut={false}
         hideModeSwitch={true}
         language="ko-KR"
-        onChange={onChange}
+        onChange={onChangeBody}
       />
       <StPostFormButton>
         <button onClick={onRemove}>뒤로가기</button>
@@ -110,4 +118,29 @@ const StPostFormButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+const StPostTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align: 'left';
+
+  & > div {
+    width: 50%;
+    height: 52px;
+    border: 3px solid #000;
+    background-color: black;
+    color: white;
+    text-align: left;
+  }
+  & > input:focus {
+    outline: none;
+  }
+  & > input {
+    width: 50%;
+    height: 50px;
+    border: 3px solid #000;
+    background-color: black;
+    color: white;
+  }
 `;

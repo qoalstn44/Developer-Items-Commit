@@ -26,14 +26,15 @@ export const getPosts = createAsyncThunk('getPosts', async () => {
   });
   return data;
 });
-export const addPost = createAsyncThunk('addPost', async ({ title }) => {
+export const addPost = createAsyncThunk('addPost', async ({ title, body }) => {
   const postData = {
     title: title,
+    body: body,
     createAt: Date.now(),
   };
   await addDoc(collection(dbService, 'posts'), postData);
   console.log(title);
-  return { title };
+  return { title, body };
 });
 export const deleteTodo = createAsyncThunk('deleteTodo', async (todoId) => {
   await axios.delete(`http://localhost:3001/todos/${todoId}`);
