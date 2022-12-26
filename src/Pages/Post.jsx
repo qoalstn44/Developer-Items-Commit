@@ -16,6 +16,7 @@ function Post() {
   }, []);
 
   const globalPostData = useSelector((state) => state.postModule.posts);
+  const globalComment = useSelector((state) => state.commentModule.comments);
 
   const onClickToggle = () => {
     setToggle(!toggle);
@@ -50,7 +51,9 @@ function Post() {
           />
         </StPostHeader>
         <p>{postItemData.body}</p>
-        <button onClick={onClickToggle}>댓글 열기</button>
+        <button onClick={onClickToggle}>
+          댓글 열기 ({globalComment.length}개)
+        </button>
         {toggle ? <CommentList postId={postItemData.id} /> : null}
       </StPost>
     </div>
