@@ -32,6 +32,8 @@ const Header = ({ toggle, setToggle }) => {
     authService.signOut();
   };
 
+  // const navMeun = ['커뮤니티', '마이페이지', '회원가입'];
+
   return (
     <StHeader>
       <StNavLogo>
@@ -39,9 +41,15 @@ const Header = ({ toggle, setToggle }) => {
       </StNavLogo>
 
       <StNavMenu className={'navbar-menu'}>
+        {/* Todo : 동적 라우팅 구성 */}
+        {/* {navMeun.map((item, index) => {
+          return (
+            <li key={index} onClick={() => navigate()}>
+              {item}
+            </li>
+          );
+        })} */}
         <li onClick={() => navigate('/1')}>커뮤니티</li>
-        <li onClick={() => navigate('/2')}>중고거래</li>
-        <li onClick={() => navigate('/3')}>이륙장</li>
 
         {isLoggedIn ? (
           <li onClick={onLogOutClick}>로그아웃</li>
@@ -50,14 +58,17 @@ const Header = ({ toggle, setToggle }) => {
         )}
         {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
         {isLoggedIn ? <li> 마이페이지 </li> : null}
+
+        <li onClick={() => navigate('/2')}>회원가입/로그인</li>
+
       </StNavMenu>
 
       {toggle ? (
         <StNavMenuNone className={'navbar-menu'}>
           <li onClick={() => navigate('/1')}>커뮤니티</li>
-          <li onClick={() => navigate('/2')}>중고거래</li>
-          <li onClick={() => navigate('/3')}>이륙장</li>
-          <li onClick={() => navigate('/5')}>회원가입/로그인</li>
+
+          <li onClick={() => navigate('/2')}>회원가입/로그인</li>
+
         </StNavMenuNone>
       ) : null}
 
@@ -70,15 +81,17 @@ const Header = ({ toggle, setToggle }) => {
 
 const StHeader = styled.nav`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  padding: 0 20px;
+  gap: 200px;
   max-width: 1360px;
-  margin: 0 auto;
+  margin: auto;
   border: 1px solid black;
-  /* background-color: #263343; */
+  width: 80%;
   @media screen and (max-width: 768px) {
     flex-direction: column;
+    gap: 0px;
+    width: 100%;
   }
 `;
 
@@ -111,12 +124,14 @@ const StNavMenuNone = styled.div`
     flex-direction: column;
     list-style: none;
     align-items: center;
-    width: 100%;
+    width: 80%;
     padding-bottom: 10px;
+    gap: 5px;
     li {
       width: 100%;
       text-align: center;
       padding: 8px 12px;
+      border: 1px solid black;
     }
     li:hover {
       background-color: #48af48;
