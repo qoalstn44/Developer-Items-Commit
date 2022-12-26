@@ -97,6 +97,9 @@ const AuthTest = () => {
         <button onClick={onSocialClick} name="google">
           구글로그인
         </button>
+        <button onClick={onSocialClick} name="github">
+          깃허브로그
+        </button>
       </div>
     </Stmodal>
   );
