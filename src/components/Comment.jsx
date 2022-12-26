@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteComment, updateComment } from '../redux/modules/commentModule';
+import {
+  deleteComment,
+  getComment,
+  updateComment,
+} from '../redux/modules/commentModule';
 import Button from './Button';
 
 function Comment({ postId, commentId, body, creator }) {
   const [toggle, setToggle] = useState(false);
-  const [newBody, setNewBody] = useState(body);
+  const [newBody, setNewBody] = useState('');
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getComment(postId));
+  }, [toggle]);
   const onClickToggle = () => {
     setToggle(!toggle);
   };
@@ -15,13 +23,14 @@ function Comment({ postId, commentId, body, creator }) {
     setNewBody(event.target.value);
   };
 
-  const updateSubmitComment = (e) => {
-    e.preventDefault();
+  const updateSubmitComment = (event) => {
+    event.preventDefault();
     dispatch(updateComment({ postId, commentId, newBody }));
+    console.log(commentId);
     setToggle(!toggle);
   };
 
-  const deleteClickComment = (event) => {
+  const deleteClickComment = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       dispatch(deleteComment({ postId, commentId }));
       alert('삭제되었습니다.');
@@ -38,6 +47,7 @@ function Comment({ postId, commentId, body, creator }) {
             type="text"
             onChange={onChangeNewBody}
             value={newBody}
+            placeholder="수정할 내용"
             required
           />
           <Button>수정완료</Button>

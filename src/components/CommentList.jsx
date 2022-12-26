@@ -1,14 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { addComment } from '../redux/modules/commentModule';
+import { addComment, getComment } from '../redux/modules/commentModule';
 
 import Comment from './Comment';
 
 function CommentList({ postId }) {
   const [comment, setComment] = useState('');
   const globalComment = useSelector((state) => state.commentModule.comments);
-
   const dispatch = useDispatch();
 
   const onChangeComment = (event) => {
@@ -19,6 +18,7 @@ function CommentList({ postId }) {
     dispatch(addComment({ postId, comment }));
     setComment('');
   };
+  console.log('globalComment:', globalComment);
 
   return (
     <StCommentContainer>
