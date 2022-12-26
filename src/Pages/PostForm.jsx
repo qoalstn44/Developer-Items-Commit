@@ -4,17 +4,15 @@ import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
-// 설명: toast-ui color picker 플러그인
-
 // 설명: StHeader, StItemSlider 스타일링
 import logo from '../img/logo.png';
 import React from 'react';
 import styled from 'styled-components';
-
+// 설명: 뒤로가기 버튼 클릭시 경로 이동
 const onClickPostList = () => {
   window.location.href = '/postlist';
 };
-
+// 설명: 뒤로가기 버튼 클릭시 경고창 띄우기
 const onRemove = () => {
   if (
     window.confirm(
