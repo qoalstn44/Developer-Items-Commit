@@ -1,15 +1,29 @@
 // 설명: toast-ui 기본
-import "@toast-ui/editor/dist/toastui-editor.css";
-import { Editor } from "@toast-ui/react-editor";
-import "@toast-ui/editor/dist/i18n/ko-kr";
-import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/i18n/ko-kr';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 // 설명: toast-ui color picker 플러그인
 
 // 설명: StHeader, StItemSlider 스타일링
-import logo from "../img/logo.png";
-import React from "react";
-import styled from "styled-components";
+import logo from '../img/logo.png';
+import React from 'react';
+import styled from 'styled-components';
+
+const onClickPostList = () => {
+  window.location.href = '/postlist';
+};
+
+const onRemove = () => {
+  if (window.confirm('정말 삭제하시겠습니까?')) {
+    // 삭제 로직
+    alert('삭제되었습니다.');
+    onClickPostList();
+  } else {
+    alert('삭제가 취소되었습니다.');
+  }
+};
 
 function PostForm() {
   return (
@@ -33,12 +47,18 @@ function PostForm() {
         theme="dark"
         initialValue="글 작성 가자잇!"
         previewStyle="vertical"
-        height="600px"
+        height="800px"
         initialEditType="markdown"
         useCommandShortcut={false}
         hideModeSwitch={true}
         language="ko-KR"
       />
+      <StPostFormButton>
+        <button className="btn-15" onClick={onRemove}>
+          뒤로가기
+        </button>
+        <button className="btn-15">작성완료</button>
+      </StPostFormButton>
     </div>
   );
 }
@@ -56,4 +76,9 @@ const StItemSlider = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+`;
+const StPostFormButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
