@@ -20,7 +20,6 @@ function PostList() {
   }, []);
 
   const globalPostData = useSelector((state) => state.postModule.posts);
-  console.log(globalPostData);
 
   const navigate = useNavigate();
 
