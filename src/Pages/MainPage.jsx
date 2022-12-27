@@ -6,15 +6,11 @@ function MainPage() {
   return (
     // 메인 홈페이지 컴포넌트 분리
     <>
-      <hr />
-
       <Slide />
 
       <hr />
 
       <BestView />
-
-      <hr />
     </>
   );
 }
