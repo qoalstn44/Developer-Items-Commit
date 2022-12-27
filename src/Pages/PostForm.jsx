@@ -19,12 +19,19 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { authService, storageService } from '../firebase';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { getComment } from '../redux/modules/commentModule';
-
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadString,
+} from 'firebase/storage';
+import nullImage from '../img/null-image.png';
 // 설명: useState
 function PostForm() {
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
   const [category, setCategory] = useState('noting');
+  const [attachment, setAttachment] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -37,13 +44,11 @@ function PostForm() {
     ) {
       // 삭제 로직
       alert('삭제되었습니다.');
-      navigate(`/postlist`);
+      window.history.back();
     } else {
       alert('뒤로가기가 취소되었습니다.');
     }
   };
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
   };
@@ -52,24 +57,56 @@ function PostForm() {
     setBody(data);
   };
 
-  const onClick = (event) => {
+  const onClick = async (event) => {
+    let attachmentUrl = '';
+    event.preventDefault();
     if (title === '' || body === '') {
       alert('입력을 완료해 주세요');
     } else if (category === 'noting') {
       alert('카테고리를 선택해주세요.');
     } else {
-      event.preventDefault();
-      dispatch(addPost({ title: title, body: body, category: category }));
+      if (attachment !== '') {
+        const fileRef = ref(
+          storageService,
+          `${authService.currentUser.uid}/${uuidv4()}`
+        );
+        const response = await uploadString(fileRef, attachment, 'data_url');
+        attachmentUrl = await getDownloadURL(response.ref);
+      }
+      dispatch(
+        addPost({
+          title: title,
+          body: body,
+          category: category,
+          attachmentUrl: attachmentUrl,
+        })
+      );
       alert('등록되었습니다.');
       navigate(`/${category}`);
     }
   };
 
   const editorRef = useRef();
-  console.log(category);
 
   const onChangeSelect = (event) => {
     setCategory(event.target.value);
+  };
+
+  const fileInput = useRef();
+
+  const onFileChange = (e) => {
+    const {
+      target: { files },
+    } = e;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(theFile);
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setAttachment(result);
+    };
   };
   return (
     <div>
@@ -95,6 +132,20 @@ function PostForm() {
           <option value="mike">마이크</option>
         </select>
       </StCategory>
+      <StFile>
+        <input
+          className="file-input"
+          type="file"
+          accept="image/*"
+          onChange={onFileChange}
+          ref={fileInput}
+        />
+        {attachment ? (
+          <img src={attachment} width="200px" height="200px" alt="img" />
+        ) : (
+          <img src={nullImage} width="200px" height="200px" alt="img" />
+        )}
+      </StFile>
       <Editor
         quickInsert={true}
         ref={editorRef}
@@ -197,7 +248,14 @@ const StPostTitle = styled.div`
     color: white;
   }
 `;
-
+const StFile = styled.div`
+  background-color: #232428;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 15%;
+  padding-left: 10px;
+`;
 const StCategory = styled.div`
   background-color: #232428;
   color: white;

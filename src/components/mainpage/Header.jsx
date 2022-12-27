@@ -68,8 +68,6 @@ const Header = ({ toggle, setToggle }) => {
 
       {toggle ? (
         <StNavMenuNone className={'navbar-menu'}>
-          <li onClick={onClickNavigateCommunityHandler}>커뮤니티</li>
-          {/* <li onClick={() => navigate('/2')}>회원가입/로그인</li> */}
           {isLoggedIn ? (
             <li onClick={onLogOutClick}>로그아웃</li>
           ) : (
@@ -103,6 +101,9 @@ const StNavLogo = styled.div`
   img {
     width: 100px;
   }
+  img:hover {
+    cursor: pointer;
+  }
 `;
 
 const StNavMenu = styled.div`
@@ -116,6 +117,7 @@ const StNavMenu = styled.div`
   li:hover {
     background-color: #48af48;
     border-radius: 4px;
+    cursor: pointer;
   }
   @media screen and (max-width: 768px) {
     display: none;
@@ -144,6 +146,7 @@ const StNavMenuNone = styled.div`
     li:hover {
       background-color: #48af48;
       border-radius: 4px;
+      cursor: pointer;
     }
   }
 `;
@@ -155,6 +158,7 @@ const StNavToggleBtn = styled.span`
   right: 32px;
   font-size: 24px;
   color: #48af48;
+  cursor: pointer;
   @media screen and (max-width: 768px) {
     display: block;
   }
