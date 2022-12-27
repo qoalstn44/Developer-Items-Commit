@@ -95,20 +95,6 @@ const Slide = () => {
     ],
   };
   return (
-    // <StContainer>
-    //   <Slider {...settings}>
-    //     <StCommunityBox>
-    //       <StTitle>PC</StTitle>
-    //       <StIcon>
-    //         <Link to={'/computer'}>
-    //           <FontAwesomeIcon icon={faComputer} size="9x" color="black" />
-    //         </Link>
-    //       </StIcon>
-    //     </StCommunityBox>
-    //   </Slider>
-    // </StContainer>
-    //   );
-    // };
     <StContainer>
       <Slider {...settings}>
         <StCommunityBox>

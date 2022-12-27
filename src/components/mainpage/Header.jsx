@@ -81,6 +81,7 @@ const Header = ({ toggle, setToggle }) => {
           {isLoggedIn ? <li> 마이페이지 </li> : null}
         </StNavMenuNone>
       ) : null}
+      <hr />
     </div>
   );
 };
