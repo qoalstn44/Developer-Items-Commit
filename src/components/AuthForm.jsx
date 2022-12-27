@@ -8,9 +8,10 @@ import { signInWithPopup } from 'firebase/auth';
 import { GoogleAuthProvider } from 'firebase/auth';
 import googleicon from '../img/googleicon.png';
 
-const AuthForm = ({ setSignInModal, ssi }) => {
+const AuthForm = ({ setSignInModal }) => {
   const closeModal = () => {
     setSignInModal(false);
+    document.body.style.overflow = 'unset';
   };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -67,12 +68,7 @@ const AuthForm = ({ setSignInModal, ssi }) => {
 
   return (
     <Stmodal>
-      <button
-        onClick={closeModal}
-        style={{ position: 'absolute', right: '10px', top: '10px' }}
-      >
-        X
-      </button>
+      <Stmodalclose onClick={closeModal}> ✖</Stmodalclose>
       <img src={logo} alt="logo" />
       <Sth1> {newAccount ? '회원가입 페이지' : '로그인 페이지'}</Sth1>
 
@@ -105,6 +101,7 @@ const AuthForm = ({ setSignInModal, ssi }) => {
           name="google"
         />
       </form>
+
       <StAccount onClick={toggleAccount}>
         {newAccount ? '로그인 하시겠습니까?' : '회원가입 하시겠습니까?'}
       </StAccount>
@@ -114,8 +111,8 @@ const AuthForm = ({ setSignInModal, ssi }) => {
 export default AuthForm;
 
 const Stmodal = styled.div`
-  width: 600px;
-  height: 850px;
+  max-width: 600px;
+  height: 750px;
   position: absolute;
   text-align: center;
   top: 50%;
@@ -125,11 +122,20 @@ const Stmodal = styled.div`
   border: 1px solid black;
   border-radius: 8px;
   z-index: 100;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 9999px;
+  @media screen and (max-width: 768px) {
+    width: 300px;
+    height: 500px;
+  }
 `;
 const Sth1 = styled.h1`
   margin-bottom: 50px;
   font-size: 50px;
   font-weight: bold;
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
 `;
 
 const Stinput = styled.input`
@@ -143,6 +149,9 @@ const Stinput = styled.input`
     border-color: gray;
     outline: none;
   }
+  @media (max-width: 768px) {
+    width: 200px;
+  }
 `;
 
 const StLogin = styled.input`
@@ -155,18 +164,40 @@ const StLogin = styled.input`
   :hover {
     color: gray;
   }
+  @media (max-width: 768px) {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 20px;
+  }
 `;
 
 const Stgogleimg = styled.img`
   margin-bottom: 100px;
   cursor: pointer;
+  max-width: 40px;
   :hover {
     filter: brightness(10) invert(1);
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 30px;
+    max-width: 15px;
   }
 `;
 
 const StAccount = styled.span`
   font-size: 20px;
+  cursor: pointer;
+  :hover {
+    color: gray;
+  }
+`;
+
+const Stmodalclose = styled.span`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
+  font-size: 30px;
   cursor: pointer;
   :hover {
     color: gray;

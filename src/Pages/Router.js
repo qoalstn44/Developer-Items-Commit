@@ -12,9 +12,7 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
-
         <Route path="/" element={<AuthTest />} />
-
         <Route path="profile" element={<ProfilePage />} />
         <Route path="/postform" element={<PostForm />} />
         <Route path="/postlist" element={<PostList />} />
