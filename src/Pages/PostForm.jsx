@@ -3,21 +3,19 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
-import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import { useRef } from 'react';
 
 // 설명: useState
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // 설명: modules
 import { addPost } from '../redux/modules/postModule';
 
 // 설명: StHeader, StItemSlider 스타일링
-import logo from '../img/logo.png';
 import React from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { authService, storageService } from '../firebase';
 import {
   getDownloadURL,

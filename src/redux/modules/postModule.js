@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import {
   addDoc,
   collection,
@@ -77,10 +76,6 @@ export const postModule = createSlice({
       state.posts = action.payload;
       state.status = 'complete';
     });
-    // builder.addCase(addPost.fulfilled, (state, action) => {
-    //   state.posts = [...state.posts, action.payload];
-    //   state.status = 'complete';
-    // });
     builder.addCase(deletePost.fulfilled, (state, action) => {
       state.posts = state.posts.filter((post) => post.id !== action.payload);
       state.status = 'complete';

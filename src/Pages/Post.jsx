@@ -5,7 +5,6 @@ import CommentList from '../components/CommentList';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getComment } from '../redux/modules/commentModule';
-// import Header from '../components/main/Header';
 import { deletePost } from '../redux/modules/postModule';
 import { authService } from '../firebase';
 import nullImage from '../img/null-image.png';
@@ -55,15 +54,17 @@ function Post() {
       <StPost>
         <StPostHeader>
           <div>조회수 : {postItemData.clickCounter}</div>
-          <div>
-            <img
+          <StButtonWrap>
+            <button
               onClick={onClickBack}
               width={50}
               height={50}
               src={backButton}
               alt="x-btn"
-            />
-          </div>
+            >
+              뒤로가기
+            </button>
+          </StButtonWrap>
           <StTitle>{postItemData.title}</StTitle>
           {postItemData.attachmentUrl ? (
             <StImage src={postItemData.attachmentUrl} alt="img" />
@@ -105,6 +106,12 @@ const StPost = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 10% 0 10%;
+`;
+const StButtonWrap = styled.div`
+  margin: 10px;
+  & > button:hover {
+    cursor: pointer;
+  }
 `;
 const StTitle = styled.div`
   text-align: center;

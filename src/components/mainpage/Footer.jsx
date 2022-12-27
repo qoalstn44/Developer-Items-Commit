@@ -34,8 +34,4 @@ const StFooter = styled.div`
   }
 `;
 
-// const StFooterIntro = styled.div`
-//   padding: 10px;
-// `;
-
 export default Footer;
