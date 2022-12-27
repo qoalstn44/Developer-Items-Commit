@@ -153,7 +153,7 @@ const Slide = () => {
 const StTitle = styled.div`
   width: 100%;
   padding: 20px 0;
-  border-bottom: 1px solid black;
+  border-bottom: 3px solid black;
   text-decoration: none;
 `;
 
@@ -171,7 +171,7 @@ const StCommunityBox = styled.div`
 `;
 
 const StContainer = styled.div`
-  border: 1px solid black;
+  border: 3px solid black;
   margin: auto;
   margin-bottom: 40px;
   width: 70%;

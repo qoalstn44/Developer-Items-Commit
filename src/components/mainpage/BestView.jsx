@@ -194,7 +194,7 @@ const StViewCount = styled.div`
 const StTitle = styled.div`
   width: 100%;
   padding: 20px 0;
-  border-top: 1px solid black;
+  border-top: 3px solid black;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -203,7 +203,7 @@ const StTitle = styled.div`
 const StContent = styled.div`
   width: 100%;
   padding: 20px 0;
-  border-top: 1px solid black;
+  border-top: 3px solid black;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -224,7 +224,7 @@ const StBestViewBox = styled.div`
 `;
 
 const StContainer = styled.div`
-  border: 1px solid black;
+  border: 3px solid black;
   margin: auto;
   margin-bottom: 40px;
   width: 70%;
