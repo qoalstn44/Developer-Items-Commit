@@ -1,8 +1,6 @@
 import React from 'react';
-import Slide from '../components/main/Slide';
-import BestView from '../components/main/BestView';
-import SideBanner from '../components/main/SideBanner';
-import Example from '../components/main/Example';
+import Slide from '../components/mainpage/Slide';
+import BestView from '../components/mainpage/BestView';
 
 function MainPage() {
   return (
@@ -17,11 +15,6 @@ function MainPage() {
       <BestView />
 
       <hr />
-      <SideBanner />
-
-      <hr />
-
-      {/* <Example /> */}
     </>
   );
 }
