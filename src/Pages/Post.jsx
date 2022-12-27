@@ -116,8 +116,7 @@ const StTitle = styled.div`
   width: 400px;
 `;
 const StImage = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 50%;
 `;
 const StBody = styled.div`
   border: 3px solid black;
