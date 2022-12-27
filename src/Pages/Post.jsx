@@ -1,12 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import backButton from '../img/x.png';
-import logo from '../img/logo.png';
 import CommentList from '../components/CommentList';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getComment } from '../redux/modules/commentModule';
 import Header from '../components/main/Header';
+import { deletePost } from '../redux/modules/postModule';
+import { authService } from '../firebase';
 
 function Post() {
   const [toggle, setToggle] = useState(false);
@@ -18,7 +19,6 @@ function Post() {
 
   const globalPostData = useSelector((state) => state.postModule.posts);
   const globalComment = useSelector((state) => state.commentModule.comments);
-
   const onClickToggle = () => {
     setToggle(!toggle);
   };
@@ -29,6 +29,18 @@ function Post() {
 
   const onClickBack = () => {
     navigate('/postlist');
+  };
+
+  const onClickDeletePost = () => {
+    if (postItemData.userUID !== authService?.currentUser?.uid) {
+      alert('로그인을 해주세요.');
+      return;
+    }
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      dispatch(deletePost({ postId: param.id }));
+      alert('삭제되었습니다.');
+      navigate(`/postlist`);
+    }
   };
 
   return (
@@ -45,7 +57,13 @@ function Post() {
             alt="x-btn"
           />
         </StPostHeader>
-        <p>{postItemData.body}</p>
+        <div>{postItemData.body}</div>
+        {postItemData.userUID === authService?.currentUser?.uid ? (
+          <div>
+            <button onClick={onClickDeletePost}>삭제</button>
+          </div>
+        ) : null}
+
         <button onClick={onClickToggle}>
           {toggle ? '댓글 닫기' : '댓글 열기'} ({globalComment.length}개)
         </button>
@@ -55,13 +73,6 @@ function Post() {
   );
 }
 export default Post;
-
-const StHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-`;
 
 const StPostHeader = styled.div`
   display: flex;
