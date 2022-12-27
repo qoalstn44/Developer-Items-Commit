@@ -93,7 +93,7 @@ const StHeader = styled.nav`
   height: 80px;
   max-width: 1360px;
   margin: auto;
-  border: 1px solid black;
+  border: 3px solid black;
   width: 80%;
   padding-right: 10px;
   @media screen and (max-width: 768px) {
