@@ -16,10 +16,9 @@ function PostList() {
   const param = useParams();
   const globalPostData = useSelector((state) => state.postModule.posts);
 
-  // const postItemData = globalPostData.find(
-  //   (item) => item.category === param.id
-  // );
-  console.log(param);
+  const postItemData = globalPostData.filter(
+    (item) => item.category === param.id
+  );
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -43,9 +42,9 @@ function PostList() {
   return (
     <div>
       <StItemList>
-        <StListName>콤퓨타</StListName>
+        <StListName>{param.id}</StListName>
         <button onClick={onClickForm}>포스트작성</button>
-        {globalPostData.map((item) => (
+        {postItemData.map((item) => (
           // 아래의 key는 id와 겹치지 않게 하기 위해 +1
           <StItem key={item.id + 1}>
             <div>

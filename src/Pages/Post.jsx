@@ -29,9 +29,8 @@ function Post() {
   const postItemData = globalPostData.find((item) => item.id === param.id);
 
   const onClickBack = () => {
-    navigate('/postlist');
+    navigate(`/${postItemData.category}`);
   };
-  console.log(param);
   const onClickDeletePost = () => {
     if (postItemData.userUID !== authService?.currentUser?.uid) {
       alert('로그인을 해주세요.');
@@ -40,7 +39,7 @@ function Post() {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       dispatch(deletePost({ postId: param.id }));
       alert('삭제되었습니다.');
-      navigate(`/postlist`);
+      navigate(`/${postItemData.category}`);
     }
   };
   const onClickPostFormModify = () => {
