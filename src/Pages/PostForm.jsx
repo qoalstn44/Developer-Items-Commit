@@ -96,13 +96,15 @@ function PostForm() {
         </select>
       </StCategory>
       <Editor
+        quickInsert={true}
         ref={editorRef}
         theme="dark"
         initialValue={body}
+        getMarkdown={onChangeBody}
         previewStyle="vertical"
         height="800px"
         initialEditType="markdown"
-        useCommandShortcut={false}
+        useCommandShortcut={true}
         hideModeSwitch={true}
         language="ko-KR"
         onChange={onChangeBody}

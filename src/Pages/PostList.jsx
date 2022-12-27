@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { clickPost, getPosts } from '../redux/modules/postModule';
+import { authService } from '../firebase';
 
 const boxFade = keyframes`
   50% { // 50% -> 정해둔 초의 50%가 지났을 때 중괄호 안의 코드를 실행
@@ -36,6 +37,10 @@ function PostList() {
     navigate(`/post/${event.target.id}`);
   };
   const onClickForm = () => {
+    if (!authService.currentUser) {
+      alert('로그인을 해주세요.');
+      return false;
+    }
     navigate(`/postform`);
   };
 

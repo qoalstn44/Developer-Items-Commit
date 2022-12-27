@@ -48,8 +48,6 @@ const Header = ({ toggle, setToggle }) => {
         </StNavLogo>
 
         <StNavMenu>
-          <li onClick={() => navigate('/postlist')}>커뮤니티</li>
-
           {isLoggedIn ? (
             <li onClick={onLogOutClick}>로그아웃</li>
           ) : (
@@ -93,7 +91,6 @@ const StHeader = styled.nav`
   height: 80px;
   max-width: 1360px;
   margin: auto;
-  border: 3px solid black;
   width: 80%;
   padding-right: 10px;
   @media screen and (max-width: 768px) {
@@ -132,7 +129,6 @@ const StNavMenuNone = styled.div`
   margin: auto;
   padding: 10px 0 10px 0;
   margin-top: 10px;
-  /* border: 1px solid black; */
   width: 100%;
   display: none;
   @media screen and (max-width: 768px) {
@@ -147,7 +143,7 @@ const StNavMenuNone = styled.div`
       width: 70%;
       text-align: center;
       padding: 8px 12px;
-      border: 1px solid black;
+      border: 3px solid black;
     }
     li:hover {
       background-color: #48af48;
