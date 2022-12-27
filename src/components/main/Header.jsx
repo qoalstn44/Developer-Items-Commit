@@ -45,38 +45,40 @@ const Header = ({ toggle, setToggle }) => {
   // };
 
   return (
-    <StHeader>
+    <div>
       <StNavLogo>
         <img src={logo} alt="logo" onClick={() => navigate('/')} />
       </StNavLogo>
 
-      <StNavMenu>
-        <li onClick={() => navigate('/postlist')}>커뮤니티</li>
+      <StHeader>
+        <StNavMenu>
+          <li onClick={() => navigate('/postlist')}>커뮤니티</li>
 
-        {isLoggedIn ? (
-          <li onClick={onLogOutClick}>로그아웃</li>
-        ) : (
-          <li onClick={showsignin}>로그인</li>
-        )}
-        {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
-        {isLoggedIn ? <li> 마이페이지 </li> : null}
-      </StNavMenu>
+          {isLoggedIn ? (
+            <li onClick={onLogOutClick}>로그아웃</li>
+          ) : (
+            <li onClick={showsignin}>로그인</li>
+          )}
+          {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
+          {isLoggedIn ? <li> 마이페이지 </li> : null}
+        </StNavMenu>
 
-      {toggle ? (
-        <StNavMenuNone className={'navbar-menu'}>
-          <li onClick={onClickNavigateCommunityHandler}>커뮤니티</li>
-          <li onClick={() => navigate('/2')}>회원가입/로그인</li>
-        </StNavMenuNone>
-      ) : null}
+        {toggle ? (
+          <StNavMenuNone className={'navbar-menu'}>
+            <li onClick={onClickNavigateCommunityHandler}>커뮤니티</li>
+            <li onClick={() => navigate('/2')}>회원가입/로그인</li>
+          </StNavMenuNone>
+        ) : null}
 
-      <StNavToggleBtn onClick={onClickToggleHandler}>
-        <i className="fa-solid fa-bars"></i>
-      </StNavToggleBtn>
+        <StNavToggleBtn onClick={onClickToggleHandler}>
+          <i className="fa-solid fa-bars"></i>
+        </StNavToggleBtn>
 
-      <StNavToggleBtn onClick={onClickToggleHandler}>
-        <i className="fa-solid fa-bars"></i>
-      </StNavToggleBtn>
-    </StHeader>
+        <StNavToggleBtn onClick={onClickToggleHandler}>
+          <i className="fa-solid fa-bars"></i>
+        </StNavToggleBtn>
+      </StHeader>
+    </div>
   );
 };
 
@@ -84,14 +86,13 @@ const Header = ({ toggle, setToggle }) => {
 const StHeader = styled.nav`
   display: flex;
   align-items: center;
-  //// 지울 곳 ////
   justify-content: flex-end;
-  gap: 200px;
+  height: 80px;
   max-width: 1360px;
-  //// 지울 곳 ////
   margin: auto;
   border: 1px solid black;
   width: 80%;
+  padding-right: 10px;
   @media screen and (max-width: 768px) {
     flex-direction: column;
     gap: 0px;
@@ -101,17 +102,23 @@ const StHeader = styled.nav`
 
 const StNavLogo = styled.div`
   img {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
     width: 150px;
     height: 100px;
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
   }
 `;
 
 const StNavMenu = styled.div`
-  //// 지울 곳 ////
   list-style: none;
   display: flex;
   flex-direction: row;
-  //// 지울 곳 ////
   li {
     padding: 8px 12px;
   }
@@ -132,10 +139,11 @@ const StNavMenuNone = styled.div`
     list-style: none;
     align-items: center;
     width: 80%;
-    padding-bottom: 10px;
     gap: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
     li {
-      width: 100%;
+      width: 70%;
       text-align: center;
       padding: 8px 12px;
       border: 1px solid black;
