@@ -18,31 +18,6 @@ import {
 import { Link } from 'react-router-dom';
 
 const Slide = () => {
-  // const postNameList = [
-  //   'Desktop',
-  //   'Monitor',
-  //   'Mouse',
-  //   'Keyborad',
-  //   'Headphone',
-  //   'Mike',
-  // ];
-  // const postImgList = [
-  //   faDesktop,
-  //   faComputer,
-  //   faComputerMouse,
-  //   faKeyboard,
-  //   faHeadphones,
-  //   faMicrophone,
-  // ];
-  // const postLink = [
-  //   '/desktop',
-  //   '/monitor',
-  //   '/mouse',
-  //   '/keyborad',
-  //   'headphone',
-  //   'mike',
-  // ];
-
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
