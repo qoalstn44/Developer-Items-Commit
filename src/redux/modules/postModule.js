@@ -48,8 +48,8 @@ export const deletePost = createAsyncThunk('deletePost', async ({ postId }) => {
   await deleteDoc(doc(dbService, `posts/${postId}/`));
   return { postId };
 });
-export const updateTodo = createAsyncThunk(
-  'updateTodo',
+export const updatePost = createAsyncThunk(
+  'updatePost',
   async ({ todoId, title, body }) => {
     await axios.patch(`http://localhost:3001/todos/${todoId}`, {
       title: title,
@@ -84,16 +84,16 @@ export const postModule = createSlice({
       state.posts = state.posts.filter((post) => post.id !== action.payload);
       state.status = 'complete';
     });
-    builder.addCase(updateTodo.fulfilled, (state, action) => {
-      state.todos = state.todos.map((todo) => {
-        if (todo.id === action.payload.todoId) {
+    builder.addCase(updatePost.fulfilled, (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post.id === action.payload.postId) {
           return {
-            ...todo,
+            ...post,
             title: action.payload.title,
             body: action.payload.body,
           };
         } else {
-          return todo;
+          return post;
         }
       });
       state.status = 'complete';

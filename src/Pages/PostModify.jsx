@@ -21,6 +21,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { authService, storageService } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { getComment } from '../redux/modules/commentModule';
+import { updatePost } from '../redux/modules/postModule';
 
 // 설명: useState
 
@@ -67,7 +68,7 @@ function PostForm() {
       alert('입력을 완료해 주세요');
     } else {
       event.preventDefault();
-      dispatch(addPost({ title: title, body: body }));
+      dispatch(updatePost({ title: title, body: body }));
       alert('수정되었습니다.');
       navigate(`/post/${param.id}`);
     }
@@ -93,6 +94,7 @@ function PostForm() {
       </StItemSlider> */}
       <StPostTitle>
         <input
+          value={postItemData.title}
           maxLength="80"
           type="text"
           placeholder="제목을 입력해주세요."
@@ -104,7 +106,7 @@ function PostForm() {
       <Editor
         ref={editorRef}
         theme="dark"
-        initialValue={body}
+        initialValue={postItemData.body}
         previewStyle="vertical"
         height="650px"
         initialEditType="markdown"
