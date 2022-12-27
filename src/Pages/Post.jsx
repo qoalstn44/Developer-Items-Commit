@@ -28,7 +28,7 @@ function Post() {
   const postItemData = globalPostData.find((item) => item.id === param.id);
 
   const onClickBack = () => {
-    navigate(`/${postItemData.category}`);
+    window.history.back();
   };
   const onClickDeletePost = () => {
     if (postItemData.userUID !== authService?.currentUser?.uid) {
