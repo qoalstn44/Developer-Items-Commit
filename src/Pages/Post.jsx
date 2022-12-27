@@ -107,7 +107,8 @@ const StTitle = styled.div`
   color: white;
   margin: 10px;
   padding: 10px;
-  max-width: 80%;
+  max-width: 70%;
+  width: 400px;
 `;
 
 const StBody = styled.div`
@@ -116,6 +117,7 @@ const StBody = styled.div`
   padding: 10px;
   height: 300px;
   max-width: 80%;
+  width: 500px;
 `;
 const StBtn = styled.div`
   margin: 5px;
