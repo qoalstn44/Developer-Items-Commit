@@ -114,7 +114,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>PC</StTitle>
           <StIcon>
-            <Link to={'/computer'}>
+            <Link to={'/postlist/computer'}>
               <FontAwesomeIcon icon={faComputer} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -122,7 +122,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>모니터</StTitle>
           <StIcon>
-            <Link to={'/monitor'}>
+            <Link to={'/postlist/monitor'}>
               <FontAwesomeIcon icon={faDesktop} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -130,7 +130,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>마우스</StTitle>
           <StIcon>
-            <Link to={'/mouse'}>
+            <Link to={'/postlist/mouse'}>
               <FontAwesomeIcon icon={faComputerMouse} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -138,7 +138,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>키보드</StTitle>
           <StIcon>
-            <Link to={'/keyborad'}>
+            <Link to={'/postlist/keyborad'}>
               <FontAwesomeIcon icon={faKeyboard} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -146,7 +146,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>헤드셋</StTitle>
           <StIcon>
-            <Link to={'/headphone'}>
+            <Link to={'/postlist/headphone'}>
               <FontAwesomeIcon icon={faHeadphones} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -154,7 +154,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>마이크</StTitle>
           <StIcon>
-            <Link to={'/mike'}>
+            <Link to={'/postlist/mike'}>
               <FontAwesomeIcon icon={faMicrophone} size="9x" color="black" />
             </Link>
           </StIcon>
