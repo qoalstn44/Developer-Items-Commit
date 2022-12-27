@@ -13,12 +13,11 @@ const persistConfig = {
 };
 
 const postPersistedReducer = persistReducer(persistConfig, postModule);
-const commentPersistedReducer = persistReducer(persistConfig, commentModule);
 
 const store = configureStore({
   reducer: {
     postModule: postPersistedReducer,
-    commentModule: commentPersistedReducer,
+    commentModule,
   },
   middleware: [thunk],
 });

@@ -4,7 +4,8 @@ import postcontainer from '../img/postcontainer.png';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getPosts } from '../redux/modules/postModule';
+import { deletePost, getPosts } from '../redux/modules/postModule';
+import { authService } from '../firebase';
 
 const boxFade = keyframes`
   50% { // 50% -> 정해둔 초의 50%가 지났을 때 중괄호 안의 코드를 실행
@@ -42,7 +43,8 @@ function PostList() {
         <button onClick={onClickForm}>작성가자잇!</button>
         <StListName>콤퓨타</StListName>
         {globalPostData.map((item) => (
-          <StItem key={item.id}>
+          // 아래의 key는 id와 겹치지 않게 하기 위해 +1
+          <StItem key={item.id + 1}>
             <StItemImg></StItemImg>
             <StItemTitle>{item.title}</StItemTitle>
             <button onClick={onClickPost} id={item.id}>
