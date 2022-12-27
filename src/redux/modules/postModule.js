@@ -31,7 +31,7 @@ export const getPosts = createAsyncThunk('getPosts', async () => {
 });
 export const addPost = createAsyncThunk(
   'addPost',
-  async ({ title, body, category }) => {
+  async ({ title, body, category, attachmentUrl }) => {
     const postData = {
       title: title,
       body: body,
@@ -39,9 +39,10 @@ export const addPost = createAsyncThunk(
       userUID: authService.currentUser.uid,
       clickCounter: 0,
       category: category,
+      attachmentUrl: attachmentUrl,
     };
     await addDoc(collection(dbService, 'posts'), postData);
-    return { title, body, category };
+    return { title, body, category, attachmentUrl };
   }
 );
 export const deletePost = createAsyncThunk('deletePost', async ({ postId }) => {
