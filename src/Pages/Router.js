@@ -19,6 +19,7 @@ const AppRouter = () => {
           <Route path="/postform" element={<PostForm />} />
           <Route path="/postlist" element={<PostList />} />
           <Route path="/post/:id" element={<Post />} />
+          <Route path="/postformmodify/:id" element={<PostFormModify />} />
         </Routes>
       </Layout>
     </BrowserRouter>

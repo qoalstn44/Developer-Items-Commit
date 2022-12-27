@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getComment } from '../redux/modules/commentModule';
 // import Header from '../components/main/Header';
 import { deletePost } from '../redux/modules/postModule';
+import { postform } from '../redux/modules/postModule';
 import { authService } from '../firebase';
 
 function Post() {
@@ -42,6 +43,13 @@ function Post() {
       navigate(`/postlist`);
     }
   };
+  const onClickPostFormModify = () => {
+    if (postItemData.userUID !== authService?.currentUser?.uid) {
+      alert('로그인을 해주세요.');
+      return;
+    }
+    navigate(`/postformmodify/${param.id}`);
+  };
 
   return (
     <div>
@@ -64,6 +72,7 @@ function Post() {
         <StBody>{postItemData.body}</StBody>
         {postItemData.userUID === authService?.currentUser?.uid ? (
           <div>
+            <button onClick={onClickPostFormModify}>수정</button>
             <button onClick={onClickDeletePost}>삭제</button>
           </div>
         ) : null}
