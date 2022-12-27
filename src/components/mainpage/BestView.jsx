@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import { getPosts } from '../../redux/modules/postModule';
+import nullImage from '../../img/null-image.png';
+import { Link, useNavigate } from 'react-router-dom';
 
 // import {
 //   doc,
@@ -137,42 +139,78 @@ const BestView = () => {
       },
     ],
   };
-
+  const navigate = useNavigate();
   return (
     <StContainer>
       <Slider {...settings}>
         <StBestViewBox>
-          <StImg src={logo} alt="logo" />
+          <Link to={`/post/${topView_1.id}`}>
+            {topView_1.attachmentUrl ? (
+              <StImg src={topView_1.attachmentUrl} alt="logo" />
+            ) : (
+              <StImg src={nullImage} alt="logo" />
+            )}
+          </Link>
           <StTitle>{topView_1?.title}</StTitle>
           <StContent>{topView_1?.body}</StContent>
           <StViewCount>View: {topView_1?.clickCounter}</StViewCount>
         </StBestViewBox>
         <StBestViewBox>
-          <StImg src={logo} alt="logo" />
+          <Link to={`/post/${topView_2.id}`}>
+            {topView_2.attachmentUrl ? (
+              <StImg src={topView_2.attachmentUrl} alt="logo" />
+            ) : (
+              <StImg src={nullImage} alt="logo" />
+            )}
+          </Link>
           <StTitle>{topView_2?.title}</StTitle>
           <StContent>{topView_2?.body}</StContent>
           <StViewCount>View: {topView_2?.clickCounter}</StViewCount>
         </StBestViewBox>
         <StBestViewBox>
-          <StImg src={logo} alt="logo" />
+          <Link to={`/post/${topView_3.id}`}>
+            {topView_3.attachmentUrl ? (
+              <StImg src={topView_3.attachmentUrl} alt="logo" />
+            ) : (
+              <StImg src={nullImage} alt="logo" />
+            )}
+          </Link>
           <StTitle>{topView_3?.title}</StTitle>
           <StContent>{topView_3?.body}</StContent>
           <StViewCount>View: {topView_3?.clickCounter}</StViewCount>
         </StBestViewBox>
         <StBestViewBox>
-          <StImg src={logo} alt="logo" />
+          <Link to={`/post/${topView_4.id}`}>
+            {topView_4.attachmentUrl ? (
+              <StImg src={topView_4.attachmentUrl} alt="logo" />
+            ) : (
+              <StImg src={nullImage} alt="logo" />
+            )}
+          </Link>
           <StTitle>{topView_4?.title}</StTitle>
           <StContent>{topView_4?.body}</StContent>
           <StViewCount>View: {topView_4?.clickCounter}</StViewCount>
         </StBestViewBox>
         <StBestViewBox>
-          <StImg src={logo} alt="logo" />
+          <Link to={`/post/${topView_5.id}`}>
+            {topView_5.attachmentUrl ? (
+              <StImg src={topView_5.attachmentUrl} alt="logo" />
+            ) : (
+              <StImg src={nullImage} alt="logo" />
+            )}
+          </Link>
           <StTitle>{topView_5?.title}</StTitle>
           <StContent>{topView_5?.body}</StContent>
           <StViewCount>View: {topView_5?.clickCounter}</StViewCount>
         </StBestViewBox>
         <StBestViewBox>
-          <StImg src={logo} alt="logo" />
+          <Link to={`/post/${topView_6.id}`}>
+            {topView_6.attachmentUrl ? (
+              <StImg src={topView_6.attachmentUrl} alt="logo" />
+            ) : (
+              <StImg src={nullImage} alt="logo" />
+            )}
+          </Link>
           <StTitle>{topView_6?.title}</StTitle>
           <StContent>{topView_6?.body}</StContent>
           <StViewCount>View: {topView_6?.clickCounter}</StViewCount>
