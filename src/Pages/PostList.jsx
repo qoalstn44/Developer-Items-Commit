@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import logo from '../img/logo.png';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -73,6 +74,12 @@ function PostList() {
 }
 export default PostList;
 
+// const StHeader = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0 20px;
+// `;
 const StListName = styled.div`
   margin: 20px;
   font-size: 30px;
