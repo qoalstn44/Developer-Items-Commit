@@ -67,9 +67,7 @@ const Header = ({ toggle, setToggle }) => {
       </StHeader>
 
       {toggle ? (
-        <StNavMenuNone>
-          <li onClick={onClickNavigateCommunityHandler}>커뮤니티</li>
-          {/* <li onClick={() => navigate('/2')}>회원가입/로그인</li> */}
+        <StNavMenuNone className={'navbar-menu'}>
           {isLoggedIn ? (
             <li onClick={onLogOutClick}>로그아웃</li>
           ) : (
@@ -96,15 +94,15 @@ const StHeader = styled.nav`
   @media screen and (max-width: 768px) {
     flex-direction: column;
     width: 90%;
-    position: fixed;
-    top: 10;
-    background-color: white;
   }
 `;
 
 const StNavLogo = styled.div`
   img {
     width: 100px;
+  }
+  img:hover {
+    cursor: pointer;
   }
 `;
 
@@ -119,6 +117,7 @@ const StNavMenu = styled.div`
   li:hover {
     background-color: #48af48;
     border-radius: 4px;
+    cursor: pointer;
   }
   @media screen and (max-width: 768px) {
     display: none;
@@ -138,7 +137,6 @@ const StNavMenuNone = styled.div`
     list-style: none;
     width: 80%;
     gap: 5px;
-    padding-top: 100px;
     li {
       width: 70%;
       text-align: center;
@@ -148,6 +146,7 @@ const StNavMenuNone = styled.div`
     li:hover {
       background-color: #48af48;
       border-radius: 4px;
+      cursor: pointer;
     }
   }
 `;
@@ -155,10 +154,11 @@ const StNavMenuNone = styled.div`
 const StNavToggleBtn = styled.span`
   display: none;
   position: absolute;
-  top: 28px;
+  top: 40px;
   right: 32px;
   font-size: 24px;
   color: #48af48;
+  cursor: pointer;
   @media screen and (max-width: 768px) {
     display: block;
   }

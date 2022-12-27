@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getComment } from '../redux/modules/commentModule';
 // import Header from '../components/main/Header';
 import { deletePost } from '../redux/modules/postModule';
-import { postform } from '../redux/modules/postModule';
 import { authService } from '../firebase';
+import nullImage from '../img/null-image.png';
 
 function Post() {
   const [toggle, setToggle] = useState(false);
@@ -65,8 +65,12 @@ function Post() {
             />
           </div>
           <StTitle>{postItemData.title}</StTitle>
+          {postItemData.attachmentUrl ? (
+            <StImage src={postItemData.attachmentUrl} alt="img" />
+          ) : (
+            <StImage src={nullImage} />
+          )}
         </StPostHeader>
-
         <StBody>{postItemData.body}</StBody>
         {postItemData.userUID === authService?.currentUser?.uid ? (
           <div>
@@ -87,13 +91,6 @@ function Post() {
   );
 }
 export default Post;
-
-// const StHeader = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   padding: 0 20px;
-// `;
 
 const StPostHeader = styled.div`
   display: flex;
@@ -118,7 +115,10 @@ const StTitle = styled.div`
   max-width: 70%;
   width: 400px;
 `;
-
+const StImage = styled.img`
+  width: 200px;
+  height: 200px;
+`;
 const StBody = styled.div`
   border: 3px solid black;
   margin: 10px;
