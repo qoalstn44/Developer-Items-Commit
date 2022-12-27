@@ -107,6 +107,7 @@ function PostForm() {
         useCommandShortcut={true}
         hideModeSwitch={true}
         language="ko-KR"
+        toolbarItems={[]}
         onChange={onChangeBody}
         hooks={{
           addImageBlobHook: async (blob, callback) => {
