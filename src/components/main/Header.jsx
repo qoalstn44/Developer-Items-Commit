@@ -1,14 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../../img/logo.png';
-
+import AuthForm from '../AuthForm';
+import { useState } from 'react';
+import { authService } from '../../firebase';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Header = ({ toggle, setToggle }) => {
   const navigate = useNavigate();
 
+  const [isLoggedIn, setIsLoggedIn] = useState(authService.currentUser);
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  });
+
   const onClickToggleHandler = () => {
     setToggle(!toggle);
+  };
+  const [signinmodal, setSignInModal] = useState(false);
+  const showsignin = () => {
+    setSignInModal(true);
+  };
+  const onLogOutClick = () => {
+    authService.signOut();
   };
 
   // const navMeun = ['커뮤니티', '마이페이지', '회원가입'];
@@ -29,13 +50,25 @@ const Header = ({ toggle, setToggle }) => {
           );
         })} */}
         <li onClick={() => navigate('/1')}>커뮤니티</li>
+
+        {isLoggedIn ? (
+          <li onClick={onLogOutClick}>로그아웃</li>
+        ) : (
+          <li onClick={showsignin}>로그인</li>
+        )}
+        {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
+        {isLoggedIn ? <li> 마이페이지 </li> : null}
+
         <li onClick={() => navigate('/2')}>회원가입/로그인</li>
+
       </StNavMenu>
 
       {toggle ? (
         <StNavMenuNone className={'navbar-menu'}>
           <li onClick={() => navigate('/1')}>커뮤니티</li>
+
           <li onClick={() => navigate('/2')}>회원가입/로그인</li>
+
         </StNavMenuNone>
       ) : null}
 
