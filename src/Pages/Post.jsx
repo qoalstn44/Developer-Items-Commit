@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getComment } from '../redux/modules/commentModule';
 // import Header from '../components/main/Header';
 import { deletePost } from '../redux/modules/postModule';
+import { postform } from '../redux/modules/postModule';
 import { authService } from '../firebase';
 
 function Post() {
@@ -28,9 +29,8 @@ function Post() {
   const postItemData = globalPostData.find((item) => item.id === param.id);
 
   const onClickBack = () => {
-    navigate('/postlist');
+    navigate(`/${postItemData.category}`);
   };
-
   const onClickDeletePost = () => {
     if (postItemData.userUID !== authService?.currentUser?.uid) {
       alert('로그인을 해주세요.');
@@ -39,37 +39,49 @@ function Post() {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       dispatch(deletePost({ postId: param.id }));
       alert('삭제되었습니다.');
-      navigate(`/postlist`);
+      navigate(`/${postItemData.category}`);
     }
+  };
+  const onClickPostFormModify = () => {
+    if (postItemData.userUID !== authService?.currentUser?.uid) {
+      alert('로그인을 해주세요.');
+      return;
+    }
+    navigate(`/postmodify/${param.id}`);
   };
 
   return (
     <div>
       <StPost>
-        {/* <Header /> */}
         <StPostHeader>
-          <p>{postItemData.title}</p>
-          <img
-            onClick={onClickBack}
-            width={50}
-            height={50}
-            src={backButton}
-            alt="x-btn"
-          />
+          <div>조회수 : {postItemData.clickCounter}</div>
+          <div>
+            <img
+              onClick={onClickBack}
+              width={50}
+              height={50}
+              src={backButton}
+              alt="x-btn"
+            />
+          </div>
+          <StTitle>{postItemData.title}</StTitle>
         </StPostHeader>
 
-        <div>{postItemData.body}</div>
+        <StBody>{postItemData.body}</StBody>
         {postItemData.userUID === authService?.currentUser?.uid ? (
           <div>
+            <button onClick={onClickPostFormModify}>수정</button>
             <button onClick={onClickDeletePost}>삭제</button>
           </div>
         ) : null}
-
-        <button onClick={onClickToggle}>
-          {toggle ? '댓글 닫기' : '댓글 열기'} ({globalComment.length}개)
-        </button>
-
-        {toggle ? <CommentList postId={postItemData.id} /> : null}
+        <StBtn>
+          <button onClick={onClickToggle}>
+            {toggle ? '댓글 닫기' : '댓글 열기'} ({globalComment.length}개)
+          </button>
+        </StBtn>
+        <StToggle>
+          {toggle ? <CommentList postId={postItemData.id} /> : null}
+        </StToggle>
       </StPost>
     </div>
   );
@@ -85,8 +97,8 @@ export default Post;
 
 const StPostHeader = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -96,4 +108,28 @@ const StPost = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 10% 0 10%;
+`;
+const StTitle = styled.div`
+  text-align: center;
+  background-color: #828282;
+  color: white;
+  margin: 10px;
+  padding: 10px;
+  max-width: 70%;
+  width: 400px;
+`;
+
+const StBody = styled.div`
+  border: 3px solid black;
+  margin: 10px;
+  padding: 10px;
+  height: 300px;
+  max-width: 80%;
+  width: 500px;
+`;
+const StBtn = styled.div`
+  margin: 5px;
+`;
+const StToggle = styled.div`
+  margin: 5px;
 `;

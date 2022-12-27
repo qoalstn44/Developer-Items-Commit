@@ -21,12 +21,22 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { authService, storageService } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { getComment } from '../redux/modules/commentModule';
+import { updatePost } from '../redux/modules/postModule';
 
 // 설명: useState
+
 function PostForm() {
-  const [category, setCategory] = useState('noting');
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getComment(postItemData.id));
+  }, []);
+
+  const globalPostData = useSelector((state) => state.postModule.posts);
+  const globalComment = useSelector((state) => state.commentModule.comments);
+  const param = useParams();
+  const navigate = useNavigate();
+
+  const postItemData = globalPostData.find((item) => item.id === param.id);
 
   // 설명: 뒤로가기 버튼 클릭시 경고창 띄우기
   const onRemove = () => {
@@ -54,27 +64,37 @@ function PostForm() {
 
   const onClick = (event) => {
     if (title === '' || body === '') {
+      event.preventDefault();
       alert('입력을 완료해 주세요');
-    } else if (category === 'noting') {
-      alert('카테고리를 선택해주세요.');
     } else {
       event.preventDefault();
-      dispatch(addPost({ title: title, body: body, category: category }));
-      alert('등록되었습니다.');
-      navigate(`/${category}`);
+      dispatch(updatePost({ title: title, body: body }));
+      alert('수정되었습니다.');
+      navigate(`/post/${param.id}`);
     }
   };
 
   const editorRef = useRef();
-  console.log(category);
-
-  const onChangeSelect = (event) => {
-    setCategory(event.target.value);
-  };
   return (
     <div>
+      {/* <StHeader>
+        <p>토글</p>
+        <p>시간</p>
+        <img src={logo} alt="logo" />
+        <p>날씨</p>
+        <p>로그인 회원가입</p>
+      </StHeader> */}
+      {/* <StItemSlider>
+        <p>컴퓨터</p>
+        <p>키보드</p>
+        <p>마우스</p>
+        <p>모니터</p>
+        <p>의자</p>
+        <p>책상</p>
+      </StItemSlider> */}
       <StPostTitle>
         <input
+          value={postItemData.title}
           maxLength="80"
           type="text"
           placeholder="제목을 입력해주세요."
@@ -83,24 +103,12 @@ function PostForm() {
         />
         <div>{title}</div>
       </StPostTitle>
-      <StCategory>
-        <StCategoryName>카테고리 : </StCategoryName>
-        <select name="카테고리" onChange={onChangeSelect} required>
-          <option value="noting">선택하세요</option>
-          <option value="computer">컴퓨터</option>
-          <option value="monitor">모니터</option>
-          <option value="keyboard">키보드</option>
-          <option value="mouse">마우스</option>
-          <option value="headphone">헤드셋</option>
-          <option value="mike">마이크</option>
-        </select>
-      </StCategory>
       <Editor
         ref={editorRef}
         theme="dark"
-        initialValue={body}
+        initialValue={postItemData.body}
         previewStyle="vertical"
-        height="800px"
+        height="650px"
         initialEditType="markdown"
         useCommandShortcut={false}
         hideModeSwitch={true}
@@ -120,7 +128,7 @@ function PostForm() {
 
       <StPostFormButton>
         <button onClick={onRemove}>뒤로가기</button>
-        <button onClick={onClick}>작성완료</button>
+        <button onClick={onClick}>수정완료</button>
       </StPostFormButton>
     </div>
   );
@@ -128,6 +136,18 @@ function PostForm() {
 
 export default PostForm;
 
+// const StHeader = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0 20px;
+// `;
+// const StItemSlider = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0 20px;
+// `;
 const StPostFormButton = styled.div`
   display: flex;
   justify-content: space-between;
@@ -174,6 +194,7 @@ const StPostTitle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  align: 'left';
 
   & > div {
     width: 50%;
@@ -193,19 +214,4 @@ const StPostTitle = styled.div`
     background-color: #232428;
     color: white;
   }
-`;
-
-const StCategory = styled.div`
-  background-color: #232428;
-  color: white;
-  border-top: 0.01rem solid white;
-  border-bottom: 0.01rem solid white;
-  display: flex;
-  justify-content: row;
-  align-items: center;
-  padding: 10px;
-`;
-const StCategoryName = styled.div`
-  margin-right: 10px;
-  font-size: 13px;
 `;

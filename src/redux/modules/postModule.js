@@ -8,6 +8,7 @@ import {
   getDocs,
   orderBy,
   query,
+  updateDoc,
 } from 'firebase/firestore';
 import { authService, dbService } from '../../firebase';
 
@@ -28,22 +29,27 @@ export const getPosts = createAsyncThunk('getPosts', async () => {
   });
   return data;
 });
-export const addPost = createAsyncThunk('addPost', async ({ title, body }) => {
-  const postData = {
-    title: title,
-    body: body,
-    createAt: Date.now(),
-    userUID: authService.currentUser.uid,
-  };
-  await addDoc(collection(dbService, 'posts'), postData);
-  return { title, body };
-});
+export const addPost = createAsyncThunk(
+  'addPost',
+  async ({ title, body, category }) => {
+    const postData = {
+      title: title,
+      body: body,
+      createAt: Date.now(),
+      userUID: authService.currentUser.uid,
+      clickCounter: 0,
+      category: category,
+    };
+    await addDoc(collection(dbService, 'posts'), postData);
+    return { title, body, category };
+  }
+);
 export const deletePost = createAsyncThunk('deletePost', async ({ postId }) => {
   await deleteDoc(doc(dbService, `posts/${postId}/`));
   return { postId };
 });
-export const updateTodo = createAsyncThunk(
-  'updateTodo',
+export const updatePost = createAsyncThunk(
+  'updatePost',
   async ({ todoId, title, body }) => {
     await axios.patch(`http://localhost:3001/todos/${todoId}`, {
       title: title,
@@ -52,13 +58,13 @@ export const updateTodo = createAsyncThunk(
     return { todoId, title, body };
   }
 );
-export const confirmTodo = createAsyncThunk(
-  'confirmTodo',
-  async ({ todoId, isDone }) => {
-    await axios.patch(`http://localhost:3001/todos/${todoId}`, {
-      isDone: !isDone,
+export const clickPost = createAsyncThunk(
+  'clickPost',
+  async ({ postId, eventPostCounter }) => {
+    await updateDoc(doc(dbService, `posts/${postId}/`), {
+      clickCounter: eventPostCounter + 1,
     });
-    return { todoId, isDone };
+    return { postId, eventPostCounter };
   }
 );
 
@@ -78,29 +84,29 @@ export const postModule = createSlice({
       state.posts = state.posts.filter((post) => post.id !== action.payload);
       state.status = 'complete';
     });
-    builder.addCase(updateTodo.fulfilled, (state, action) => {
-      state.todos = state.todos.map((todo) => {
-        if (todo.id === action.payload.todoId) {
+    builder.addCase(updatePost.fulfilled, (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post.id === action.payload.postId) {
           return {
-            ...todo,
+            ...post,
             title: action.payload.title,
             body: action.payload.body,
           };
         } else {
-          return todo;
+          return post;
         }
       });
       state.status = 'complete';
     });
-    builder.addCase(confirmTodo.fulfilled, (state, action) => {
-      state.todos = state.todos.map((todo) => {
-        if (todo.id === action.payload.todoId) {
+    builder.addCase(clickPost.fulfilled, (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post.id === action.payload.postId) {
           return {
-            ...todo,
-            isDone: !action.payload.isDone,
+            ...post,
+            clickCounter: action.payload.eventPostCounter + 1,
           };
         } else {
-          return todo;
+          return post;
         }
       });
       state.status = 'complete';
