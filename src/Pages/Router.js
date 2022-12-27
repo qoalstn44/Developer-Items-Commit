@@ -3,9 +3,12 @@ import MainPage from '../Pages/MainPage';
 import PostList from '../Pages/PostList';
 import PostForm from '../Pages/PostForm';
 import Post from '../Pages/Post';
+
 import AuthTest from './AuthTest';
 import React from 'react';
 import ProfilePage from './ProfilePage';
+
+
 
 const AppRouter = () => {
   return (

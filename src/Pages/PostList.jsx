@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import logo from '../img/logo.png';
 import postcontainer from '../img/postcontainer.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getPosts } from '../redux/modules/postModule';
@@ -14,13 +14,11 @@ const boxFade = keyframes`
 
 function PostList() {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getPosts());
   }, []);
 
   const globalPostData = useSelector((state) => state.postModule.posts);
-  console.log(globalPostData);
 
   const navigate = useNavigate();
 
