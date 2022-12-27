@@ -8,6 +8,7 @@ import {
   getDocs,
   orderBy,
   query,
+  updateDoc,
 } from 'firebase/firestore';
 import { authService, dbService } from '../../firebase';
 
@@ -34,6 +35,7 @@ export const addPost = createAsyncThunk('addPost', async ({ title, body }) => {
     body: body,
     createAt: Date.now(),
     userUID: authService.currentUser.uid,
+    clickCounter: 0,
   };
   await addDoc(collection(dbService, 'posts'), postData);
   return { title, body };
@@ -52,13 +54,13 @@ export const updateTodo = createAsyncThunk(
     return { todoId, title, body };
   }
 );
-export const confirmTodo = createAsyncThunk(
-  'confirmTodo',
-  async ({ todoId, isDone }) => {
-    await axios.patch(`http://localhost:3001/todos/${todoId}`, {
-      isDone: !isDone,
+export const clickPost = createAsyncThunk(
+  'clickPost',
+  async ({ postId, eventPostCounter }) => {
+    await updateDoc(doc(dbService, `posts/${postId}/`), {
+      clickCounter: eventPostCounter + 1,
     });
-    return { todoId, isDone };
+    return { postId, eventPostCounter };
   }
 );
 
@@ -92,15 +94,15 @@ export const postModule = createSlice({
       });
       state.status = 'complete';
     });
-    builder.addCase(confirmTodo.fulfilled, (state, action) => {
-      state.todos = state.todos.map((todo) => {
-        if (todo.id === action.payload.todoId) {
+    builder.addCase(clickPost.fulfilled, (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post.id === action.payload.postId) {
           return {
-            ...todo,
-            isDone: !action.payload.isDone,
+            ...post,
+            clickCounter: action.payload.eventPostCounter + 1,
           };
         } else {
-          return todo;
+          return post;
         }
       });
       state.status = 'complete';

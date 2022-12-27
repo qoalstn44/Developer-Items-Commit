@@ -48,28 +48,33 @@ function Post() {
       <StPost>
         {/* <Header /> */}
         <StPostHeader>
-          <p>{postItemData.title}</p>
-          <img
-            onClick={onClickBack}
-            width={50}
-            height={50}
-            src={backButton}
-            alt="x-btn"
-          />
+          <div>조회수 : {postItemData.clickCounter}</div>
+          <div>
+            <img
+              onClick={onClickBack}
+              width={50}
+              height={50}
+              src={backButton}
+              alt="x-btn"
+            />
+          </div>
+          <StTitle>{postItemData.title}</StTitle>
         </StPostHeader>
 
-        <div>{postItemData.body}</div>
+        <StBody>{postItemData.body}</StBody>
         {postItemData.userUID === authService?.currentUser?.uid ? (
           <div>
             <button onClick={onClickDeletePost}>삭제</button>
           </div>
         ) : null}
-
-        <button onClick={onClickToggle}>
-          {toggle ? '댓글 닫기' : '댓글 열기'} ({globalComment.length}개)
-        </button>
-
-        {toggle ? <CommentList postId={postItemData.id} /> : null}
+        <StBtn>
+          <button onClick={onClickToggle}>
+            {toggle ? '댓글 닫기' : '댓글 열기'} ({globalComment.length}개)
+          </button>
+        </StBtn>
+        <StToggle>
+          {toggle ? <CommentList postId={postItemData.id} /> : null}
+        </StToggle>
       </StPost>
     </div>
   );
@@ -85,8 +90,8 @@ export default Post;
 
 const StPostHeader = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -96,4 +101,25 @@ const StPost = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 10% 0 10%;
+`;
+const StTitle = styled.div`
+  background-color: #828282;
+  color: white;
+  margin: 10px;
+  padding: 10px;
+  max-width: 80%;
+`;
+
+const StBody = styled.div`
+  border: 3px solid black;
+  margin: 10px;
+  padding: 10px;
+  height: 300px;
+  max-width: 80%;
+`;
+const StBtn = styled.div`
+  margin: 5px;
+`;
+const StToggle = styled.div`
+  margin: 5px;
 `;
