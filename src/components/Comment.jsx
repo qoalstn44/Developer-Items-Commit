@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import { authService } from '../firebase';
 import {
   deleteComment,
@@ -8,7 +9,14 @@ import {
 } from '../redux/modules/commentModule';
 import Button from './Button';
 
-function Comment({ postId, commentId, body, userUID, displayName }) {
+function Comment({
+  postId,
+  commentId,
+  body,
+  userUID,
+  displayName,
+  commentDate,
+}) {
   const [toggle, setToggle] = useState(false);
   const [newBody, setNewBody] = useState('');
   const dispatch = useDispatch();
@@ -46,30 +54,71 @@ function Comment({ postId, commentId, body, userUID, displayName }) {
   };
   return (
     <div>
-      <div>{displayName ?? '익명사용자'}</div>
-      {!toggle ? (
-        <div>{body}</div>
-      ) : (
-        <form onSubmit={updateSubmitComment}>
-          <input
-            type="text"
-            onChange={onChangeNewBody}
-            value={newBody}
-            placeholder="수정할 내용"
-            required
-          />
-          <Button>수정완료</Button>
-        </form>
-      )}
-      {userUID === authService?.currentUser?.uid ? (
-        <div>
-          <Button onClick={onClickToggle}>{toggle ? '취소' : '수정'}</Button>
-          <Button onClick={deleteClickComment}>삭제</Button>
-        </div>
-      ) : null}
+      <StCommentWrap>
+        <StCreator>{displayName ?? '익명사용자'}</StCreator>
+        {!toggle ? (
+          <StBody>{body}</StBody>
+        ) : (
+          <form onSubmit={updateSubmitComment}>
+            <StForm>
+              <StInput
+                type="text"
+                onChange={onChangeNewBody}
+                value={newBody}
+                placeholder="수정할 내용"
+                maxLength={22}
+                required
+              />
+              <Button>수정완료</Button>
+            </StForm>
+          </form>
+        )}
+        {userUID === authService?.currentUser?.uid ? (
+          <div>
+            <Button onClick={onClickToggle}>{toggle ? '취소' : '수정'}</Button>
+            <Button onClick={deleteClickComment}>삭제</Button>
+          </div>
+        ) : null}
+        <StCommentDate>
+          {new Date(commentDate + 9 * 60 * 60 * 1000).toLocaleString('ko-KR', {
+            timeZone: 'UTC',
+          })}
+        </StCommentDate>
+      </StCommentWrap>
       <hr />
     </div>
   );
 }
 
 export default Comment;
+
+const StCommentWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+`;
+const StCreator = styled.div`
+  background-color: #a3a3a3;
+  color: white;
+  width: 200px;
+  text-align: center;
+  margin: 5px;
+  padding: 3px;
+`;
+const StBody = styled.div`
+  margin: 10px;
+`;
+const StForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const StInput = styled.input`
+  width: 150px;
+`;
+const StCommentDate = styled.div`
+  font-size: 12px;
+`;
