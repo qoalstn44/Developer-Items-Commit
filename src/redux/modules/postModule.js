@@ -50,12 +50,12 @@ export const deletePost = createAsyncThunk('deletePost', async ({ postId }) => {
 });
 export const updatePost = createAsyncThunk(
   'updatePost',
-  async ({ todoId, title, body }) => {
-    await axios.patch(`http://localhost:3001/todos/${todoId}`, {
+  async ({ postId, title, body }) => {
+    await updateDoc(doc(dbService, `posts/${postId}/`), {
       title: title,
       body: body,
     });
-    return { todoId, title, body };
+    return { postId, title, body };
   }
 );
 export const clickPost = createAsyncThunk(

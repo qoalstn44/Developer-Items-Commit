@@ -52,7 +52,7 @@ function PostForm() {
       alert('뒤로가기가 취소되었습니다.');
     }
   };
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(postItemData.title);
   const [body, setBody] = useState('');
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -68,7 +68,7 @@ function PostForm() {
       alert('입력을 완료해 주세요');
     } else {
       event.preventDefault();
-      dispatch(updatePost({ title: title, body: body }));
+      dispatch(updatePost({ title: title, body: body, postId: param.id }));
       alert('수정되었습니다.');
       navigate(`/post/${param.id}`);
     }
@@ -94,7 +94,7 @@ function PostForm() {
       </StItemSlider> */}
       <StPostTitle>
         <input
-          value={postItemData.title}
+          value={title}
           maxLength="80"
           type="text"
           placeholder="제목을 입력해주세요."
