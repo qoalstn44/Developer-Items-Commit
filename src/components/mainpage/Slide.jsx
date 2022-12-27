@@ -95,26 +95,12 @@ const Slide = () => {
     ],
   };
   return (
-    // <StContainer>
-    //   <Slider {...settings}>
-    //     <StCommunityBox>
-    //       <StTitle>PC</StTitle>
-    //       <StIcon>
-    //         <Link to={'/computer'}>
-    //           <FontAwesomeIcon icon={faComputer} size="9x" color="black" />
-    //         </Link>
-    //       </StIcon>
-    //     </StCommunityBox>
-    //   </Slider>
-    // </StContainer>
-    //   );
-    // };
     <StContainer>
       <Slider {...settings}>
         <StCommunityBox>
           <StTitle>PC</StTitle>
           <StIcon>
-            <Link to={'/postlist/computer'}>
+            <Link to={'/computer'}>
               <FontAwesomeIcon icon={faComputer} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -122,7 +108,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>모니터</StTitle>
           <StIcon>
-            <Link to={'/postlist/monitor'}>
+            <Link to={'/monitor'}>
               <FontAwesomeIcon icon={faDesktop} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -130,7 +116,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>마우스</StTitle>
           <StIcon>
-            <Link to={'/postlist/mouse'}>
+            <Link to={'/mouse'}>
               <FontAwesomeIcon icon={faComputerMouse} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -138,7 +124,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>키보드</StTitle>
           <StIcon>
-            <Link to={'/postlist/keyborad'}>
+            <Link to={'/keyborad'}>
               <FontAwesomeIcon icon={faKeyboard} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -146,7 +132,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>헤드셋</StTitle>
           <StIcon>
-            <Link to={'/postlist/headphone'}>
+            <Link to={'/headphone'}>
               <FontAwesomeIcon icon={faHeadphones} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -154,7 +140,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>마이크</StTitle>
           <StIcon>
-            <Link to={'/postlist/mike'}>
+            <Link to={'/mike'}>
               <FontAwesomeIcon icon={faMicrophone} size="9x" color="black" />
             </Link>
           </StIcon>
