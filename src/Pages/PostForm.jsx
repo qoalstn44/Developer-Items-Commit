@@ -50,34 +50,36 @@ function PostForm() {
     setBody(data);
   };
 
-  const onClick = () => {
-    if (window.confirm('정말 등록하시겠습니까?')) {
+  const onClick = (event) => {
+    if (title === '' || body === '') {
+      event.preventDefault();
+      alert('입력을 완료해 주세요');
+    } else {
+      event.preventDefault();
       dispatch(addPost({ title: title, body: body }));
       alert('등록되었습니다.');
       navigate(`/postlist`);
-    } else {
-      alert('등록이 취소되었습니다.');
     }
   };
 
   const editorRef = useRef();
   return (
     <div>
-      <StHeader>
+      {/* <StHeader>
         <p>토글</p>
         <p>시간</p>
         <img src={logo} alt="logo" />
         <p>날씨</p>
         <p>로그인 회원가입</p>
-      </StHeader>
-      <StItemSlider>
+      </StHeader> */}
+      {/* <StItemSlider>
         <p>컴퓨터</p>
         <p>키보드</p>
         <p>마우스</p>
         <p>모니터</p>
         <p>의자</p>
         <p>책상</p>
-      </StItemSlider>
+      </StItemSlider> */}
       <StPostTitle>
         <input
           maxLength="80"
@@ -121,18 +123,18 @@ function PostForm() {
 
 export default PostForm;
 
-const StHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-`;
-const StItemSlider = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-`;
+// const StHeader = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0 20px;
+// `;
+// const StItemSlider = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0 20px;
+// `;
 const StPostFormButton = styled.div`
   display: flex;
   justify-content: space-between;

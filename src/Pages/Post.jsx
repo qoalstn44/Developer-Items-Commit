@@ -5,7 +5,7 @@ import CommentList from '../components/CommentList';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getComment } from '../redux/modules/commentModule';
-import Header from '../components/main/Header';
+// import Header from '../components/main/Header';
 import { deletePost } from '../redux/modules/postModule';
 import { authService } from '../firebase';
 
@@ -46,7 +46,7 @@ function Post() {
   return (
     <div>
       <StPost>
-        <Header />
+        {/* <Header /> */}
         <StPostHeader>
           <p>{postItemData.title}</p>
           <img
@@ -75,6 +75,13 @@ function Post() {
   );
 }
 export default Post;
+
+// const StHeader = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0 20px;
+// `;
 
 const StPostHeader = styled.div`
   display: flex;

@@ -32,13 +32,13 @@ function PostList() {
 
   return (
     <div>
-      <StHeader>
+      {/* <StHeader>
         <p>토글</p>
         <p>시간</p>
         <img src={logo} alt="logo" />
         <p>날씨</p>
         <p>로그인 회원가입</p>
-      </StHeader>
+      </StHeader> */}
       <StItemList>
         <button onClick={onClickForm}>작성가자잇!</button>
         <StListName>콤퓨타</StListName>
@@ -58,12 +58,12 @@ function PostList() {
 }
 export default PostList;
 
-const StHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-`;
+// const StHeader = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 0 20px;
+// `;
 const StListName = styled.div`
   font-size: 30px;
   & {
