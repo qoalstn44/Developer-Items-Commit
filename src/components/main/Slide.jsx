@@ -5,7 +5,19 @@ import React, { Component } from 'react';
 import Slider from 'react-slick';
 
 import styled from 'styled-components';
-import logo from '../../img/logo.png';
+// import logo from '../../img/logo.png';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faDesktop,
+  faComputer,
+  faComputerMouse,
+  faKeyboard,
+  faHeadphones,
+  faMicrophone,
+} from '@fortawesome/free-solid-svg-icons';
+
+import { useNavigate } from 'react-router-dom';
 
 // TODO : 버튼 스타일 수정
 // import { ReactComponent as Next } from '../../img/arrow-right-solid.svg';
@@ -54,10 +66,10 @@ class Slide extends Component {
       speed: 1000,
       responsive: [
         {
-          nextArrow: false,
-          prevArrow: false,
           breakpoint: 768,
           settings: {
+            nextArrow: false,
+            prevArrow: false,
             slidesToShow: 1,
             slidesToScroll: 1,
             speed: 1000,
@@ -71,33 +83,60 @@ class Slide extends Component {
       <StContainer>
         <Slider {...settings}>
           <StCommunityBox>
-            <StTitle>커뮤1</StTitle>
-            <StImg src={logo}></StImg>
+            <StTitle>PC</StTitle>
+            <StIcon>
+              <FontAwesomeIcon icon={faComputer} size="9x" />
+            </StIcon>
+            {/* <StImg src={logo}></StImg> */}
           </StCommunityBox>
           <StCommunityBox>
-            <StTitle>커뮤2</StTitle>
-            <StImg src={logo}></StImg>
+            <StTitle>모니터</StTitle>
+            <StIcon>
+              <FontAwesomeIcon icon={faDesktop} size="9x" />
+            </StIcon>
+            {/* <StImg src={logo}></StImg> */}
           </StCommunityBox>
           <StCommunityBox>
-            <StTitle>커뮤3</StTitle>
-            <StImg src={logo}></StImg>
+            <StTitle>마우스</StTitle>
+            <StIcon>
+              <FontAwesomeIcon icon={faComputerMouse} size="9x" />
+            </StIcon>
+            {/* <StImg src={logo}></StImg> */}
           </StCommunityBox>
           <StCommunityBox>
-            <StTitle>커뮤4</StTitle>
-            <StImg src={logo}></StImg>
+            <StTitle>키보드</StTitle>
+            <StIcon>
+              <FontAwesomeIcon icon={faKeyboard} size="9x" />
+            </StIcon>
+            {/* <StImg src={logo}></StImg> */}
           </StCommunityBox>
           <StCommunityBox>
-            <StTitle>커뮤5</StTitle>
-            <StImg src={logo}></StImg>
+            <StTitle>헤드셋</StTitle>
+            <StIcon>
+              <FontAwesomeIcon icon={faHeadphones} size="9x" />
+            </StIcon>
+            {/* <StImg src={logo}></StImg> */}
           </StCommunityBox>
           <StCommunityBox>
-            <StTitle>커뮤6</StTitle>
-            <StImg src={logo}></StImg>
+            <StTitle>마이크</StTitle>
+            <StIcon>
+              <FontAwesomeIcon icon={faMicrophone} size="9x" />
+            </StIcon>
+            {/* <StImg src={logo}></StImg> */}
           </StCommunityBox>
         </Slider>
       </StContainer>
     );
   }
+}
+
+{
+  /* <FontAwesomeIcon icon={faComputer} />
+<FontAwesomeIcon icon={faDesktop} />
+<FontAwesomeIcon icon={faComputerMouse} />
+<FontAwesomeIcon icon={faKeyboard} />
+<FontAwesomeIcon icon={faHeadphones} />
+<FontAwesomeIcon icon={faMicrophone} /> */
 }
 
 const StTitle = styled.div`
@@ -106,8 +145,16 @@ const StTitle = styled.div`
   border-bottom: 1px solid black;
 `;
 
-const StImg = styled.img`
-  width: 100%;
+// const StImg = styled.img`
+//   width: 100%;
+//   :hover {
+//     background-color: #48af48;
+//     border-radius: 4px;
+//   }
+// `;
+
+const StIcon = styled.div`
+  padding: 5px;
   :hover {
     background-color: #48af48;
     border-radius: 4px;
@@ -123,7 +170,10 @@ const StContainer = styled.div`
   border: 1px solid black;
   margin: auto;
   margin-bottom: 40px;
-  width: 50%;
+  width: 70%;
+  @media screen and (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 export default Slide;

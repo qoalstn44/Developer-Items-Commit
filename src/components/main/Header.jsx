@@ -24,87 +24,108 @@ const Header = ({ toggle, setToggle }) => {
   const onClickToggleHandler = () => {
     setToggle(!toggle);
   };
+
   const [signinmodal, setSignInModal] = useState(false);
   const showsignin = () => {
     setSignInModal(true);
   };
+
   const onLogOutClick = () => {
     authService.signOut();
   };
 
-  // const navMeun = ['커뮤니티', '마이페이지', '회원가입'];
+  const onClickNavigateCommunityHandler = () => {
+    setToggle(!toggle);
+    navigate('/postlist');
+  };
+
+  // const onClickNavigateLoginHandler = () => {
+  //   setToggle(!toggle);
+  //   navigate('/1');
+  // };
 
   return (
-    <StHeader>
+    <div>
       <StNavLogo>
         <img src={logo} alt="logo" onClick={() => navigate('/')} />
       </StNavLogo>
 
-      <StNavMenu className={'navbar-menu'}>
-        {/* Todo : 동적 라우팅 구성 */}
-        {/* {navMeun.map((item, index) => {
-          return (
-            <li key={index} onClick={() => navigate()}>
-              {item}
-            </li>
-          );
-        })} */}
-        <li onClick={() => navigate('/1')}>커뮤니티</li>
+      <StHeader>
+        <StNavMenu>
+          <li onClick={() => navigate('/postlist')}>커뮤니티</li>
 
-        {isLoggedIn ? (
-          <li onClick={onLogOutClick}>로그아웃</li>
-        ) : (
-          <li onClick={showsignin}>로그인</li>
-        )}
-        {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
-        {isLoggedIn ? <li> 마이페이지 </li> : null}
+          {isLoggedIn ? (
+            <li onClick={onLogOutClick}>로그아웃</li>
+          ) : (
+            <li onClick={showsignin}>로그인</li>
+          )}
+          {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
+          {isLoggedIn ? <li> 마이페이지 </li> : null}
+        </StNavMenu>
 
-        <li onClick={() => navigate('/2')}>회원가입/로그인</li>
+        {toggle ? (
+          <StNavMenuNone className={'navbar-menu'}>
+            <li onClick={onClickNavigateCommunityHandler}>커뮤니티</li>
+            {/* <li onClick={() => navigate('/2')}>회원가입/로그인</li> */}
+            {isLoggedIn ? (
+              <li onClick={onLogOutClick}>로그아웃</li>
+            ) : (
+              <li onClick={showsignin}>로그인</li>
+            )}
+            {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
+            {isLoggedIn ? <li> 마이페이지 </li> : null}
+          </StNavMenuNone>
+        ) : null}
 
-      </StNavMenu>
+        <StNavToggleBtn onClick={onClickToggleHandler}>
+          <i className="fa-solid fa-bars"></i>
+        </StNavToggleBtn>
 
-      {toggle ? (
-        <StNavMenuNone className={'navbar-menu'}>
-          <li onClick={() => navigate('/1')}>커뮤니티</li>
-
-          <li onClick={() => navigate('/2')}>회원가입/로그인</li>
-
-        </StNavMenuNone>
-      ) : null}
-
-      <StNavToggleBtn onClick={onClickToggleHandler}>
-        <i className="fa-solid fa-bars"></i>
-      </StNavToggleBtn>
-    </StHeader>
+        <StNavToggleBtn onClick={onClickToggleHandler}>
+          <i className="fa-solid fa-bars"></i>
+        </StNavToggleBtn>
+      </StHeader>
+    </div>
   );
 };
 
+// TODO : 로고 가운데 정렬
 const StHeader = styled.nav`
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  gap: 200px;
+  justify-content: flex-end;
+  height: 80px;
   max-width: 1360px;
   margin: auto;
   border: 1px solid black;
   width: 80%;
+  padding-right: 10px;
   @media screen and (max-width: 768px) {
     flex-direction: column;
     gap: 0px;
-    width: 100%;
+    width: 90%;
   }
 `;
 
 const StNavLogo = styled.div`
   img {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
     width: 150px;
     height: 100px;
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
   }
 `;
 
 const StNavMenu = styled.div`
-  display: flex;
   list-style: none;
+  display: flex;
+  flex-direction: row;
   li {
     padding: 8px 12px;
   }
@@ -125,11 +146,9 @@ const StNavMenuNone = styled.div`
     list-style: none;
     align-items: center;
     width: 80%;
-    padding-bottom: 10px;
     gap: 5px;
-    height: ;
     li {
-      width: 100%;
+      width: 70%;
       text-align: center;
       padding: 8px 12px;
       border: 1px solid black;
