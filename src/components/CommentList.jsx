@@ -28,8 +28,10 @@ function CommentList({ postId }) {
       <StForm onSubmit={onSubmitComment}>
         <input
           type="text"
+          placeholder="댓글을 작성해보세요."
           onChange={onChangeComment}
           value={comment}
+          maxLength={22}
           required
         />
         <button>완료</button>
@@ -43,6 +45,7 @@ function CommentList({ postId }) {
             displayName={comment.displayName}
             userUID={comment.userUID}
             body={comment.body}
+            commentDate={comment.createAt}
           />
         </div>
       ))}

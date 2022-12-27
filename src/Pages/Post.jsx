@@ -47,7 +47,7 @@ function Post() {
         </StPostHeader>
         <p>{postItemData.body}</p>
         <button onClick={onClickToggle}>
-          댓글 열기 ({globalComment.length}개)
+          {toggle ? '댓글 닫기' : '댓글 열기'} ({globalComment.length}개)
         </button>
         {toggle ? <CommentList postId={postItemData.id} /> : null}
       </StPost>
