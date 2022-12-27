@@ -94,6 +94,7 @@ const StNavMenuNone = styled.div`
     width: 80%;
     padding-bottom: 10px;
     gap: 5px;
+    height: ;
     li {
       width: 100%;
       text-align: center;

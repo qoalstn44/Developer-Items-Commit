@@ -50,6 +50,7 @@ function Post() {
           />
         </StPostHeader>
         <p>{postItemData.body}</p>
+        <button onClick={onClickToggle}>수정</button>
         <button onClick={onClickToggle}>댓글 열기</button>
         {toggle ? <CommentList postId={postItemData.id} /> : null}
       </StPost>
