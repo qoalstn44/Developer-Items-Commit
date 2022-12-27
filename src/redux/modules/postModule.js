@@ -3,11 +3,13 @@ import axios from 'axios';
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   orderBy,
   query,
 } from 'firebase/firestore';
-import { dbService } from '../../firebase';
+import { authService, dbService } from '../../firebase';
 
 const initialState = {
   posts: [],
@@ -31,14 +33,14 @@ export const addPost = createAsyncThunk('addPost', async ({ title, body }) => {
     title: title,
     body: body,
     createAt: Date.now(),
+    userUID: authService.currentUser.uid,
   };
   await addDoc(collection(dbService, 'posts'), postData);
-  console.log(title);
   return { title, body };
 });
-export const deleteTodo = createAsyncThunk('deleteTodo', async (todoId) => {
-  await axios.delete(`http://localhost:3001/todos/${todoId}`);
-  return todoId;
+export const deletePost = createAsyncThunk('deletePost', async ({ postId }) => {
+  await deleteDoc(doc(dbService, `posts/${postId}/`));
+  return { postId };
 });
 export const updateTodo = createAsyncThunk(
   'updateTodo',
@@ -68,12 +70,12 @@ export const postModule = createSlice({
       state.posts = action.payload;
       state.status = 'complete';
     });
-    builder.addCase(addPost.fulfilled, (state, action) => {
-      state.posts = [...state.posts, action.payload];
-      state.status = 'complete';
-    });
-    builder.addCase(deleteTodo.fulfilled, (state, action) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+    // builder.addCase(addPost.fulfilled, (state, action) => {
+    //   state.posts = [...state.posts, action.payload];
+    //   state.status = 'complete';
+    // });
+    builder.addCase(deletePost.fulfilled, (state, action) => {
+      state.posts = state.posts.filter((post) => post.id !== action.payload);
       state.status = 'complete';
     });
     builder.addCase(updateTodo.fulfilled, (state, action) => {

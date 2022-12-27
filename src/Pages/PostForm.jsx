@@ -9,15 +9,17 @@ import { useRef } from 'react';
 // 설명: useState
 import { useState } from 'react';
 // 설명: modules
-import { addPost, getPosts } from '../redux/modules/postModule';
+import { addPost } from '../redux/modules/postModule';
 
 // 설명: StHeader, StItemSlider 스타일링
 import logo from '../img/logo.png';
 import React from 'react';
 import styled from 'styled-components';
-
+import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { authService, storageService } from '../firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 // 설명: useState
 function PostForm() {
@@ -80,8 +82,8 @@ function PostForm() {
         <input
           maxLength="80"
           type="text"
-          placeholder="제목을 입력해주세요.
-        "
+          placeholder="제목을 입력해주세요."
+          required
           onChange={onChangeTitle}
         />
         <div>{title}</div>
@@ -97,6 +99,16 @@ function PostForm() {
         hideModeSwitch={true}
         language="ko-KR"
         onChange={onChangeBody}
+        hooks={{
+          addImageBlobHook: async (blob, callback) => {
+            const fileRef = ref(
+              storageService,
+              `${authService.currentUser.uid}/${uuidv4()}`
+            );
+            const response = await uploadBytes(fileRef, blob, 'data_url');
+            callback(await getDownloadURL(response.ref));
+          },
+        }}
       />
 
       <StPostFormButton>
