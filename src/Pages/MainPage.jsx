@@ -2,6 +2,7 @@ import React from 'react';
 import Slide from '../components/main/Slide';
 import BestView from '../components/main/BestView';
 import SideBanner from '../components/main/SideBanner';
+import Example from '../components/main/Example';
 
 function MainPage() {
   return (
@@ -19,6 +20,8 @@ function MainPage() {
       <SideBanner />
 
       <hr />
+
+      {/* <Example /> */}
     </>
   );
 }
