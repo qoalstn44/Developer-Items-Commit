@@ -23,9 +23,19 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { getComment } from '../redux/modules/commentModule';
 
 // 설명: useState
+
 function PostForm() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getComment(postItemData.id));
+  }, []);
+
+  const globalPostData = useSelector((state) => state.postModule.posts);
+  const globalComment = useSelector((state) => state.commentModule.comments);
+  const param = useParams();
+  const navigate = useNavigate();
+
+  const postItemData = globalPostData.find((item) => item.id === param.id);
 
   // 설명: 뒤로가기 버튼 클릭시 경고창 띄우기
   const onRemove = () => {
@@ -58,8 +68,8 @@ function PostForm() {
     } else {
       event.preventDefault();
       dispatch(addPost({ title: title, body: body }));
-      alert('등록되었습니다.');
-      navigate(`/postlist`);
+      alert('수정되었습니다.');
+      navigate(`/post/${param.id}`);
     }
   };
 
@@ -96,7 +106,7 @@ function PostForm() {
         theme="dark"
         initialValue={body}
         previewStyle="vertical"
-        height="800px"
+        height="650px"
         initialEditType="markdown"
         useCommandShortcut={false}
         hideModeSwitch={true}
@@ -116,7 +126,7 @@ function PostForm() {
 
       <StPostFormButton>
         <button onClick={onRemove}>뒤로가기</button>
-        <button onClick={onClick}>tnwjd완료</button>
+        <button onClick={onClick}>수정완료</button>
       </StPostFormButton>
     </div>
   );

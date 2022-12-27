@@ -7,6 +7,7 @@ import Layout from '../components/mainpage/Layout';
 import AuthTest from './AuthTest';
 import React from 'react';
 import ProfilePage from './ProfilePage';
+import PostModify from '../Pages/PostModify';
 
 const AppRouter = () => {
   return (
@@ -19,7 +20,7 @@ const AppRouter = () => {
           <Route path="/postform" element={<PostForm />} />
           <Route path="/postlist" element={<PostList />} />
           <Route path="/post/:id" element={<Post />} />
-          <Route path="/postformmodify/:id" element={<PostFormModify />} />
+          <Route path="/postmodify/:id" element={<PostModify />} />
         </Routes>
       </Layout>
     </BrowserRouter>
