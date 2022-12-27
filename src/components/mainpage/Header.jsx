@@ -95,7 +95,7 @@ const StHeader = styled.nav`
   padding-right: 10px;
   @media screen and (max-width: 768px) {
     flex-direction: column;
-    width: 90%;
+    width: 95%;
     position: fixed;
     top: 10;
     background-color: white;
