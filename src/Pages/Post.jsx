@@ -31,7 +31,7 @@ function Post() {
   const onClickBack = () => {
     navigate('/postlist');
   };
-
+  console.log(param);
   const onClickDeletePost = () => {
     if (postItemData.userUID !== authService?.currentUser?.uid) {
       alert('로그인을 해주세요.');
@@ -54,7 +54,6 @@ function Post() {
   return (
     <div>
       <StPost>
-        {/* <Header /> */}
         <StPostHeader>
           <div>조회수 : {postItemData.clickCounter}</div>
           <div>
@@ -112,11 +111,13 @@ const StPost = styled.div`
   margin: 0 10% 0 10%;
 `;
 const StTitle = styled.div`
+  text-align: center;
   background-color: #828282;
   color: white;
   margin: 10px;
   padding: 10px;
-  max-width: 80%;
+  max-width: 70%;
+  width: 400px;
 `;
 
 const StBody = styled.div`
@@ -125,6 +126,7 @@ const StBody = styled.div`
   padding: 10px;
   height: 300px;
   max-width: 80%;
+  width: 500px;
 `;
 const StBtn = styled.div`
   margin: 5px;

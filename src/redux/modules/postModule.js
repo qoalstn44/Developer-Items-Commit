@@ -29,17 +29,21 @@ export const getPosts = createAsyncThunk('getPosts', async () => {
   });
   return data;
 });
-export const addPost = createAsyncThunk('addPost', async ({ title, body }) => {
-  const postData = {
-    title: title,
-    body: body,
-    createAt: Date.now(),
-    userUID: authService.currentUser.uid,
-    clickCounter: 0,
-  };
-  await addDoc(collection(dbService, 'posts'), postData);
-  return { title, body };
-});
+export const addPost = createAsyncThunk(
+  'addPost',
+  async ({ title, body, category }) => {
+    const postData = {
+      title: title,
+      body: body,
+      createAt: Date.now(),
+      userUID: authService.currentUser.uid,
+      clickCounter: 0,
+      category: category,
+    };
+    await addDoc(collection(dbService, 'posts'), postData);
+    return { title, body, category };
+  }
+);
 export const deletePost = createAsyncThunk('deletePost', async ({ postId }) => {
   await deleteDoc(doc(dbService, `posts/${postId}/`));
   return { postId };

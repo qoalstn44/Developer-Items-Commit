@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import logo from '../img/logo.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { clickPost, getPosts } from '../redux/modules/postModule';
@@ -12,14 +12,19 @@ const boxFade = keyframes`
 `;
 
 function PostList() {
+  const navigate = useNavigate();
+  const param = useParams();
+  const globalPostData = useSelector((state) => state.postModule.posts);
+
+  // const postItemData = globalPostData.find(
+  //   (item) => item.category === param.id
+  // );
+  console.log(param);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
   }, []);
-
-  const globalPostData = useSelector((state) => state.postModule.posts);
-
-  const navigate = useNavigate();
 
   const onClickPost = async (event) => {
     const eventPost = globalPostData.filter(
@@ -37,23 +42,16 @@ function PostList() {
 
   return (
     <div>
-      {/* <StHeader>
-        <p>토글</p>
-        <p>시간</p>
-        <img src={logo} alt="logo" />
-        <p>날씨</p>
-        <p>로그인 회원가입</p>
-      </StHeader> */}
       <StItemList>
-        <button onClick={onClickForm}>작성가자잇!</button>
         <StListName>콤퓨타</StListName>
+        <button onClick={onClickForm}>포스트작성</button>
         {globalPostData.map((item) => (
           // 아래의 key는 id와 겹치지 않게 하기 위해 +1
           <StItem key={item.id + 1}>
             <div>
               <StItemTitle>{item.title}</StItemTitle>
               <button onClick={onClickPost} id={item.id}>
-                상세페이지 가라잇!
+                자세히보기
               </button>
               <StPostDate>
                 {new Date(item.createAt + 9 * 60 * 60 * 1000).toLocaleString(
@@ -79,6 +77,7 @@ export default PostList;
 //   padding: 0 20px;
 // `;
 const StListName = styled.div`
+  margin: 20px;
   font-size: 30px;
   & {
     animation: ${boxFade} 1s step-end infinite; // ease-in-out infinite : 무한 alternate
