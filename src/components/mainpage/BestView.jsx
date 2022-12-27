@@ -212,7 +212,7 @@ const StContent = styled.div`
 const StImg = styled.img`
   width: 100%;
   :hover {
-    background-color: #48af48;
+    background-color: #94e394;
     border-radius: 4px;
   }
 `;

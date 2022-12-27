@@ -8,8 +8,6 @@ function MainPage() {
     <>
       <Slide />
 
-      <hr />
-
       <BestView />
     </>
   );

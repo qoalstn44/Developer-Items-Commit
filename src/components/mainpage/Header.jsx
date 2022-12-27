@@ -48,8 +48,6 @@ const Header = ({ toggle, setToggle }) => {
         </StNavLogo>
 
         <StNavMenu>
-          <li onClick={() => navigate('/postlist')}>커뮤니티</li>
-
           {isLoggedIn ? (
             <li onClick={onLogOutClick}>로그아웃</li>
           ) : (

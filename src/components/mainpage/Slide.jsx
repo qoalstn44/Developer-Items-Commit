@@ -124,7 +124,7 @@ const Slide = () => {
         <StCommunityBox>
           <StTitle>키보드</StTitle>
           <StIcon>
-            <Link to={'/keyborad'}>
+            <Link to={'/keyboard'}>
               <FontAwesomeIcon icon={faKeyboard} size="9x" color="black" />
             </Link>
           </StIcon>
@@ -160,7 +160,7 @@ const StTitle = styled.div`
 const StIcon = styled.div`
   padding: 5px;
   :hover {
-    background-color: #48af48;
+    background-color: #94e394;
     border-radius: 4px;
   }
 `;
