@@ -28,9 +28,6 @@ function Weather() {
         setTemp(temp);
       });
   }
-  // console.log(city);
-  // console.log(weather);
-  // console.log(temp);
 
   function onGeoError() {
     alert('날씨정보를 불러올 수 없습니다.');
