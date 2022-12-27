@@ -66,7 +66,14 @@ const Header = ({ toggle, setToggle }) => {
         {toggle ? (
           <StNavMenuNone className={'navbar-menu'}>
             <li onClick={onClickNavigateCommunityHandler}>커뮤니티</li>
-            <li onClick={() => navigate('/2')}>회원가입/로그인</li>
+            {/* <li onClick={() => navigate('/2')}>회원가입/로그인</li> */}
+            {isLoggedIn ? (
+              <li onClick={onLogOutClick}>로그아웃</li>
+            ) : (
+              <li onClick={showsignin}>로그인</li>
+            )}
+            {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
+            {isLoggedIn ? <li> 마이페이지 </li> : null}
           </StNavMenuNone>
         ) : null}
 
@@ -140,8 +147,6 @@ const StNavMenuNone = styled.div`
     align-items: center;
     width: 80%;
     gap: 5px;
-    margin-top: auto;
-    margin-bottom: auto;
     li {
       width: 70%;
       text-align: center;

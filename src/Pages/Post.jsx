@@ -6,6 +6,7 @@ import CommentList from '../components/CommentList';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getComment } from '../redux/modules/commentModule';
+import Header from '../components/main/Header';
 
 function Post() {
   const [toggle, setToggle] = useState(false);
@@ -33,13 +34,7 @@ function Post() {
   return (
     <div>
       <StPost>
-        <StHeader>
-          <p>토글</p>
-          <p>시간</p>
-          <img src={logo} alt="logo" />
-          <p>날씨</p>
-          <p>로그인 회원가입</p>
-        </StHeader>
+        <Header />
         <StPostHeader>
           <p>{postItemData.title}</p>
           <img
@@ -51,9 +46,7 @@ function Post() {
           />
         </StPostHeader>
         <p>{postItemData.body}</p>
-        <button onClick={onClickToggle}>
-          댓글 열기 ({globalComment.length}개)
-        </button>
+        <button onClick={onClickToggle}>댓글 열기</button>
         {toggle ? <CommentList postId={postItemData.id} /> : null}
       </StPost>
     </div>

@@ -98,6 +98,7 @@ function PostForm() {
         language="ko-KR"
         onChange={onChangeBody}
       />
+
       <StPostFormButton>
         <button onClick={onRemove}>뒤로가기</button>
         <button onClick={onClick}>작성완료</button>
