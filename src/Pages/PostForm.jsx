@@ -61,7 +61,7 @@ function PostForm() {
       event.preventDefault();
       dispatch(addPost({ title: title, body: body, category: category }));
       alert('등록되었습니다.');
-      navigate(`/postlist`);
+      navigate(`/${category}`);
     }
   };
 
