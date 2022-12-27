@@ -110,6 +110,7 @@ function PostForm() {
           },
         }}
       />
+
       <StPostFormButton>
         <button onClick={onRemove}>뒤로가기</button>
         <button onClick={onClick}>작성완료</button>

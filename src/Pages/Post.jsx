@@ -57,6 +57,7 @@ function Post() {
             alt="x-btn"
           />
         </StPostHeader>
+
         <div>{postItemData.body}</div>
         {postItemData.userUID === authService?.currentUser?.uid ? (
           <div>
@@ -67,6 +68,7 @@ function Post() {
         <button onClick={onClickToggle}>
           {toggle ? '댓글 닫기' : '댓글 열기'} ({globalComment.length}개)
         </button>
+
         {toggle ? <CommentList postId={postItemData.id} /> : null}
       </StPost>
     </div>
