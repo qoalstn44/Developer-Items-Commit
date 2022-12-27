@@ -5,9 +5,18 @@ import Slider from 'react-slick';
 
 import logo from '../../img/logo.png';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import { getPosts } from '../../redux/modules/postModule';
 
 const BestView = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, []);
+
   const data = useSelector((state) => state.postModule.posts);
   // console.log(data);
 
@@ -72,33 +81,33 @@ const BestView = () => {
       <Slider {...settings}>
         <StBestViewBox>
           <StImg src={logo} alt="logo" />
-          <StTitle>{data_1.title}</StTitle>
-          <StContent>{data_1.body}</StContent>
+          <StTitle>{data_1?.title}</StTitle>
+          <StContent>{data_1?.body}</StContent>
         </StBestViewBox>
         <StBestViewBox>
           <StImg src={logo} alt="logo" />
-          <StTitle>{data_2.title}</StTitle>
-          <StContent>{data_2.body}</StContent>
+          <StTitle>{data_2?.title}</StTitle>
+          <StContent>{data_2?.body}</StContent>
         </StBestViewBox>
         <StBestViewBox>
           <StImg src={logo} alt="logo" />
-          <StTitle>{data_3.title}</StTitle>
-          <StContent>{data_3.body}</StContent>
+          <StTitle>{data_3?.title}</StTitle>
+          <StContent>{data_3?.body}</StContent>
         </StBestViewBox>
         <StBestViewBox>
           <StImg src={logo} alt="logo" />
-          <StTitle>{data_4.title}</StTitle>
-          <StContent>{data_4.body}</StContent>
+          <StTitle>{data_4?.title}</StTitle>
+          <StContent>{data_4?.body}</StContent>
         </StBestViewBox>
         <StBestViewBox>
           <StImg src={logo} alt="logo" />
-          <StTitle>{data_5.title}</StTitle>
-          <StContent>{data_5.body}</StContent>
+          <StTitle>{data_5?.title}</StTitle>
+          <StContent>{data_5?.body}</StContent>
         </StBestViewBox>
         <StBestViewBox>
           <StImg src={logo} alt="logo" />
-          <StTitle>{data_6.title}</StTitle>
-          <StContent>{data_6.body}</StContent>
+          <StTitle>{data_6?.title}</StTitle>
+          <StContent>{data_6?.body}</StContent>
         </StBestViewBox>
       </Slider>
     </StContainer>
