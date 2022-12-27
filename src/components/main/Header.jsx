@@ -96,7 +96,7 @@ const StHeader = styled.nav`
   @media screen and (max-width: 768px) {
     flex-direction: column;
     gap: 0px;
-    width: 100%;
+    width: 90%;
   }
 `;
 
