@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getStorage, ref } from 'firebase/storage';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBZ799wGCVYs0epUFdANY-QHIXWrDuskxk',
@@ -17,20 +17,5 @@ const app = initializeApp(firebaseConfig);
 const authService = getAuth(app);
 const dbService = getFirestore(app);
 const storageService = getStorage(app);
-const storage = getStorage();
-const storageRef = ref(storage);
-const spaceRef = ref(storage, 'images/space.jpg');
-const imagesRef = spaceRef.parent;
-const rootRef = spaceRef.root;
 
-export {
-  app,
-  authService,
-  dbService,
-  storageService,
-  storageRef,
-  storage,
-  imagesRef,
-  rootRef,
-  spaceRef,
-};
+export { app, authService, dbService, storageService };
