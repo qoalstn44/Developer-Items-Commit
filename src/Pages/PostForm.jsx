@@ -77,6 +77,7 @@ function PostForm() {
           body: body,
           category: category,
           attachmentUrl: attachmentUrl,
+          creator: authService.currentUser.displayName,
         })
       );
       alert('등록되었습니다.');
