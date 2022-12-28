@@ -147,7 +147,6 @@ const StDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 200px;
 `;
 const StForm = styled.form`
   margin: 10px;
