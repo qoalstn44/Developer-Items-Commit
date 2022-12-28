@@ -84,8 +84,6 @@ const Header = ({ toggle, setToggle }) => {
 
       {toggle ? (
         <StNavMenuNone>
-          <li onClick={onClickNavigateCommunityHandler}>커뮤니티</li>
-          {/* <li onClick={() => navigate('/2')}>회원가입/로그인</li> */}
           {isLoggedIn ? (
             <li onClick={onLogOutClick}>로그아웃</li>
           ) : (
