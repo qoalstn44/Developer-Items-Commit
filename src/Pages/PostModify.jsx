@@ -6,32 +6,33 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import { useRef } from 'react';
 
 // 설명: useState
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // 설명: modules
-import { addPost } from '../redux/modules/postModule';
 
 // 설명: StHeader, StItemSlider 스타일링
 import React from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import { authService, storageService } from '../firebase';
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadString,
-} from 'firebase/storage';
-import nullImage from '../img/null-image.png';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { getComment } from '../redux/modules/commentModule';
+import { updatePost } from '../redux/modules/postModule';
+
 // 설명: useState
+
 function PostForm() {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [category, setCategory] = useState('noting');
-  const [attachment, setAttachment] = useState('');
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getComment(postItemData.id));
+  }, []);
+
+  const globalPostData = useSelector((state) => state.postModule.posts);
+  const param = useParams();
+  const navigate = useNavigate();
+
+  const postItemData = globalPostData.find((item) => item.id === param.id);
 
   // 설명: 뒤로가기 버튼 클릭시 경고창 띄우기
   const onRemove = () => {
@@ -42,11 +43,13 @@ function PostForm() {
     ) {
       // 삭제 로직
       alert('삭제되었습니다.');
-      window.history.back();
+      navigate(`/postlist`);
     } else {
       alert('뒤로가기가 취소되었습니다.');
     }
   };
+  const [title, setTitle] = useState(postItemData.title);
+  const [body, setBody] = useState('');
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
   };
@@ -55,61 +58,24 @@ function PostForm() {
     setBody(data);
   };
 
-  const onClick = async (event) => {
-    let attachmentUrl = '';
-    event.preventDefault();
+  const onClick = (event) => {
     if (title === '' || body === '') {
+      event.preventDefault();
       alert('입력을 완료해 주세요');
-    } else if (category === 'noting') {
-      alert('카테고리를 선택해주세요.');
     } else {
-      if (attachment !== '') {
-        const fileRef = ref(
-          storageService,
-          `${authService.currentUser.uid}/${uuidv4()}`
-        );
-        const response = await uploadString(fileRef, attachment, 'data_url');
-        attachmentUrl = await getDownloadURL(response.ref);
-      }
-      dispatch(
-        addPost({
-          title: title,
-          body: body,
-          category: category,
-          attachmentUrl: attachmentUrl,
-        })
-      );
-      alert('등록되었습니다.');
-      navigate(`/${category}`);
+      event.preventDefault();
+      dispatch(updatePost({ title: title, body: body, postId: param.id }));
+      alert('수정되었습니다.');
+      navigate(`/post/${param.id}`);
     }
   };
 
   const editorRef = useRef();
-
-  const onChangeSelect = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const fileInput = useRef();
-
-  const onFileChange = (e) => {
-    const {
-      target: { files },
-    } = e;
-    const theFile = files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(theFile);
-    reader.onloadend = (finishedEvent) => {
-      const {
-        currentTarget: { result },
-      } = finishedEvent;
-      setAttachment(result);
-    };
-  };
   return (
     <div>
       <StPostTitle>
         <input
+          value={title}
           maxLength="80"
           type="text"
           placeholder="제목을 입력해주세요."
@@ -118,45 +84,16 @@ function PostForm() {
         />
         <div>{title}</div>
       </StPostTitle>
-      <StCategory>
-        <StCategoryName>카테고리 : </StCategoryName>
-        <select name="카테고리" onChange={onChangeSelect} required>
-          <option value="noting">선택하세요</option>
-          <option value="computer">컴퓨터</option>
-          <option value="monitor">모니터</option>
-          <option value="keyboard">키보드</option>
-          <option value="mouse">마우스</option>
-          <option value="headphone">헤드셋</option>
-          <option value="mike">마이크</option>
-        </select>
-      </StCategory>
-      <StFile>
-        <input
-          className="file-input"
-          type="file"
-          accept="image/*"
-          onChange={onFileChange}
-          ref={fileInput}
-        />
-        {attachment ? (
-          <img src={attachment} width="200px" height="200px" alt="img" />
-        ) : (
-          <img src={nullImage} width="200px" height="200px" alt="img" />
-        )}
-      </StFile>
       <Editor
-        quickInsert={true}
         ref={editorRef}
         theme="dark"
-        initialValue={body}
-        getMarkdown={onChangeBody}
+        initialValue={postItemData.body}
         previewStyle="vertical"
-        height="800px"
+        height="650px"
         initialEditType="markdown"
-        useCommandShortcut={true}
+        useCommandShortcut={false}
         hideModeSwitch={true}
         language="ko-KR"
-        toolbarItems={[]}
         onChange={onChangeBody}
         hooks={{
           addImageBlobHook: async (blob, callback) => {
@@ -172,7 +109,7 @@ function PostForm() {
 
       <StPostFormButton>
         <button onClick={onRemove}>뒤로가기</button>
-        <button onClick={onClick}>작성완료</button>
+        <button onClick={onClick}>수정완료</button>
       </StPostFormButton>
     </div>
   );
@@ -245,26 +182,4 @@ const StPostTitle = styled.div`
     background-color: #232428;
     color: white;
   }
-`;
-const StFile = styled.div`
-  background-color: #232428;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-right: 15%;
-  padding-left: 10px;
-`;
-const StCategory = styled.div`
-  background-color: #232428;
-  color: white;
-  border-top: 0.01rem solid white;
-  border-bottom: 0.01rem solid white;
-  display: flex;
-  justify-content: row;
-  align-items: center;
-  padding: 10px;
-`;
-const StCategoryName = styled.div`
-  margin-right: 10px;
-  font-size: 13px;
 `;
