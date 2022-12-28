@@ -11,10 +11,12 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="/postform" element={<PostForm />} />
-        <Route path="/postlist" element={<PostList />} />
-        <Route path="/post/:id" element={<Post />} />
+          <Route path="/authform" element={<AuthTest />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/postform" element={<PostForm />} />
+          <Route path="/:id" element={<PostList />} />
+          <Route path="/post/:id" element={<Post />} />
+          <Route path="/postmodify/:id" element={<PostModify />} />
       </Routes>
     </BrowserRouter>
   );
