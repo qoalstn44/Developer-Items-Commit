@@ -20,8 +20,7 @@ const BestView = () => {
 
   const data = useSelector((state) => state.postModule.posts);
   const bestData = data.slice(0, 6);
-  // const real = [...data];
-  // real.sort((a, b) => b.clickCounter - a.clickCounter);
+  bestData.sort((a, b) => b.clickCounter - a.clickCounter);
 
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
