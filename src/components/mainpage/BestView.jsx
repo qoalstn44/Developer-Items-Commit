@@ -189,6 +189,7 @@ const StContent = styled.div`
 
 const StImg = styled.img`
   width: 100%;
+  height: 250px;
   :hover {
     background-color: #94e394;
     border-radius: 4px;

@@ -33,6 +33,7 @@ const Header = ({ toggle, setToggle }) => {
 
   const onLogOutClick = () => {
     authService.signOut();
+    window.history.back();
   };
 
   const onClickNavigateCommunityHandler = () => {
@@ -54,7 +55,9 @@ const Header = ({ toggle, setToggle }) => {
             <li onClick={showsignin}>로그인</li>
           )}
           {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
-          {isLoggedIn ? <li> 마이페이지 </li> : null}
+          {isLoggedIn ? (
+            <li onClick={() => navigate('/profile')}>마이페이지</li>
+          ) : null}
 
           <li>
             <Weather />
