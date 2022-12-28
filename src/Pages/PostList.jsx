@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import logo from '../img/logo.png';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -53,7 +52,8 @@ function PostList() {
           // 아래의 key는 id와 겹치지 않게 하기 위해 +1
           <StItem key={item.id + 1}>
             <div>
-              <StItemTitle>{item.title}</StItemTitle>
+              <div>작성자 : {item.creator}</div>
+              <StItemTitle>제목 : {item.title}</StItemTitle>
               <button onClick={onClickPost} id={item.id}>
                 자세히보기
               </button>
