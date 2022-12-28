@@ -19,18 +19,8 @@ const BestView = () => {
   }, []);
 
   const data = useSelector((state) => state.postModule.posts);
-  const real = [...data];
-
-  real.sort((a, b) => b.clickCounter - a.clickCounter);
-
-  const [topView_1, topView_2, topView_3, topView_4, topView_5, topView_6] = [
-    real[0],
-    real[1],
-    real[2],
-    real[3],
-    real[4],
-    real[5],
-  ];
+  // const real = [...data];
+  // real.sort((a, b) => b.clickCounter - a.clickCounter);
 
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -83,78 +73,22 @@ const BestView = () => {
   return (
     <StContainer>
       <Slider {...settings}>
-        <StBestViewBox>
-          <Link to={`/post/${topView_1.id}`}>
-            {topView_1.attachmentUrl ? (
-              <StImg src={topView_1.attachmentUrl} alt="logo" />
-            ) : (
-              <StImg src={nullImage} alt="logo" />
-            )}
-          </Link>
-          <StTitle>{topView_1?.title}</StTitle>
-          <StContent>{topView_1?.body}</StContent>
-          <StViewCount>View: {topView_1?.clickCounter}</StViewCount>
-        </StBestViewBox>
-        <StBestViewBox>
-          <Link to={`/post/${topView_2.id}`}>
-            {topView_2.attachmentUrl ? (
-              <StImg src={topView_2.attachmentUrl} alt="logo" />
-            ) : (
-              <StImg src={nullImage} alt="logo" />
-            )}
-          </Link>
-          <StTitle>{topView_2?.title}</StTitle>
-          <StContent>{topView_2?.body}</StContent>
-          <StViewCount>View: {topView_2?.clickCounter}</StViewCount>
-        </StBestViewBox>
-        <StBestViewBox>
-          <Link to={`/post/${topView_3.id}`}>
-            {topView_3.attachmentUrl ? (
-              <StImg src={topView_3.attachmentUrl} alt="logo" />
-            ) : (
-              <StImg src={nullImage} alt="logo" />
-            )}
-          </Link>
-          <StTitle>{topView_3?.title}</StTitle>
-          <StContent>{topView_3?.body}</StContent>
-          <StViewCount>View: {topView_3?.clickCounter}</StViewCount>
-        </StBestViewBox>
-        <StBestViewBox>
-          <Link to={`/post/${topView_4.id}`}>
-            {topView_4.attachmentUrl ? (
-              <StImg src={topView_4.attachmentUrl} alt="logo" />
-            ) : (
-              <StImg src={nullImage} alt="logo" />
-            )}
-          </Link>
-          <StTitle>{topView_4?.title}</StTitle>
-          <StContent>{topView_4?.body}</StContent>
-          <StViewCount>View: {topView_4?.clickCounter}</StViewCount>
-        </StBestViewBox>
-        <StBestViewBox>
-          <Link to={`/post/${topView_5.id}`}>
-            {topView_5.attachmentUrl ? (
-              <StImg src={topView_5.attachmentUrl} alt="logo" />
-            ) : (
-              <StImg src={nullImage} alt="logo" />
-            )}
-          </Link>
-          <StTitle>{topView_5?.title}</StTitle>
-          <StContent>{topView_5?.body}</StContent>
-          <StViewCount>View: {topView_5?.clickCounter}</StViewCount>
-        </StBestViewBox>
-        <StBestViewBox>
-          <Link to={`/post/${topView_6.id}`}>
-            {topView_6.attachmentUrl ? (
-              <StImg src={topView_6.attachmentUrl} alt="logo" />
-            ) : (
-              <StImg src={nullImage} alt="logo" />
-            )}
-          </Link>
-          <StTitle>{topView_6?.title}</StTitle>
-          <StContent>{topView_6?.body}</StContent>
-          <StViewCount>View: {topView_6?.clickCounter}</StViewCount>
-        </StBestViewBox>
+        {data.map((item) => (
+          <StBestViewBox>
+            <div>
+              <Link to={`/post/${item.id}`}>
+                {item.attachmentUrl ? (
+                  <StImg src={item.attachmentUrl} alt="logo" />
+                ) : (
+                  <StImg src={nullImage} alt="logo" />
+                )}
+              </Link>
+              <StTitle>{item?.title}</StTitle>
+              <StContent>{item?.body}</StContent>
+              <StViewCount>View: {item?.clickCounter}</StViewCount>
+            </div>
+          </StBestViewBox>
+        ))}
       </Slider>
     </StContainer>
   );
