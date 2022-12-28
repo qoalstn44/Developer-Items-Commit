@@ -19,7 +19,7 @@ const BestView = () => {
   }, []);
 
   const data = useSelector((state) => state.postModule.posts);
-
+  const bestData = data.slice(0, 6);
   // const real = [...data];
   // real.sort((a, b) => b.clickCounter - a.clickCounter);
 
@@ -74,7 +74,7 @@ const BestView = () => {
   return (
     <StContainer>
       <Slider {...settings}>
-        {data.map((item) => (
+        {bestData.map((item) => (
           <StBestViewBox key={item.id + 1}>
             <div>
               <Link to={`/post/${item.id}`}>
