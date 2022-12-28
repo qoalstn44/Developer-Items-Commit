@@ -7,6 +7,7 @@ import { authService } from '../../firebase';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Weather from '../Weather';
+import nullImage from '../../img/null-image.png';
 
 const Header = ({ toggle, setToggle }) => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Header = ({ toggle, setToggle }) => {
 
   const onLogOutClick = () => {
     authService.signOut();
-    window.history.back();
+    navigate('/');
   };
 
   const onClickNavigateCommunityHandler = () => {
@@ -56,7 +57,19 @@ const Header = ({ toggle, setToggle }) => {
           )}
           {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
           {isLoggedIn ? (
-            <li onClick={() => navigate('/profile')}>마이페이지</li>
+            <StList onClick={() => navigate('/profile')}>
+              <StDisplayName>
+                {authService.currentUser.displayName}
+              </StDisplayName>
+              {authService.currentUser.photoURL ? (
+                <StProfileImg
+                  src={authService.currentUser.photoURL}
+                  alt="img"
+                />
+              ) : (
+                <StProfileImg src={nullImage} alt="img" />
+              )}
+            </StList>
           ) : null}
 
           <li>
@@ -79,7 +92,21 @@ const Header = ({ toggle, setToggle }) => {
             <li onClick={showsignin}>로그인</li>
           )}
           {signinmodal && <AuthForm setSignInModal={setSignInModal} />}
-          {isLoggedIn ? <li> 마이페이지 </li> : null}
+          {isLoggedIn ? (
+            <StList onClick={() => navigate('/profile')}>
+              <StDisplayName>
+                {authService.currentUser.displayName}
+              </StDisplayName>
+              {authService.currentUser.photoURL ? (
+                <StProfileImg
+                  src={authService.currentUser.photoURL}
+                  alt="img"
+                />
+              ) : (
+                <StProfileImg src={nullImage} alt="img" />
+              )}
+            </StList>
+          ) : null}
         </StNavMenuNone>
       ) : null}
       <hr />
@@ -109,6 +136,23 @@ const StNavLogo = styled.div`
   img {
     width: 100px;
   }
+`;
+
+const StProfileImg = styled.img`
+  border-radius: 50%;
+  width: 30px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const StDisplayName = styled.div`
+  margin-right: 10px;
+`;
+const StList = styled.li`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StNavMenu = styled.div`

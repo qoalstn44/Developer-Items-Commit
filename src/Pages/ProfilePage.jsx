@@ -78,12 +78,13 @@ function ProfilePage() {
         currentTarget: { result },
       } = finishedEvent;
       setNewProfileImg(result);
+      console.log(result);
     };
   };
   return (
     <StProfile>
-      <StProfileName>프로필페이지</StProfileName>
       <StDiv>
+        <StProfileName>프로필페이지</StProfileName>
         {authService.currentUser.photoURL ? (
           <StImg src={newProfileImg} alt="photoURL" />
         ) : (
@@ -132,8 +133,7 @@ const StProfile = styled.div`
 `;
 
 const StProfileName = styled.h2`
-  position: absolute;
-  top: 200px;
+  top: 250px;
 `;
 const Stuserprofile = styled.h3`
   margin: 10px;
@@ -147,6 +147,7 @@ const StDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 200px;
 `;
 const StForm = styled.form`
   margin: 10px;
