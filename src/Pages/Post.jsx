@@ -54,6 +54,7 @@ function Post() {
       <StPost>
         <StPostHeader>
           <div>조회수 : {postItemData.clickCounter}</div>
+          <div>작성자 : {postItemData.creator}</div>
           <StButtonWrap>
             <button
               onClick={onClickBack}
