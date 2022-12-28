@@ -1,6 +1,6 @@
 import { authService } from '../firebase';
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import styled from 'styled-components';
 import logo from '../img/logo.png';
@@ -11,10 +11,10 @@ import googleicon from '../img/googleicon.png';
 const AuthForm = ({ setSignInModal }) => {
   const closeModal = () => {
     setSignInModal(false);
-    document.body.style.overflow = 'unset';
   };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [newAccount, setNewAccount] = useState();
   const [error, setError] = useState('');
   const onChange = (event) => {
@@ -25,24 +25,33 @@ const AuthForm = ({ setSignInModal }) => {
       setEmail(value);
     } else if (name === 'password') {
       setPassword(value);
+    } else if (name === 'displayName') {
+      setDisplayName(value);
     }
   };
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      let data;
       if (newAccount) {
-        data = await createUserWithEmailAndPassword(
+        await createUserWithEmailAndPassword(
           authService,
           email,
-          password
-        );
+          password,
+          displayName
+        ).then(() => {
+          updateProfile(authService.currentUser, {
+            displayName: displayName,
+          });
+        });
+
         setSignInModal(false);
+        alert('회원가입 완료됐습니다.');
       } else {
-        data = await signInWithEmailAndPassword(authService, email, password);
+        await signInWithEmailAndPassword(authService, email, password);
+
         setSignInModal(false);
+        alert('로그인 완료됐습니다.');
       }
-      console.log(data);
     } catch (error) {
       setError(error.message);
     }
@@ -61,18 +70,30 @@ const AuthForm = ({ setSignInModal }) => {
     if (name === 'google') {
       provider = new GoogleAuthProvider();
     }
-    const data = await signInWithPopup(authService, provider);
-    console.log(data);
+    await signInWithPopup(authService, provider);
+
     setSignInModal(false);
+    alert('로그인 완료됐습니다.');
   };
 
   return (
     <Stmodal>
-      <Stmodalclose onClick={closeModal}> ✖</Stmodalclose>
+      <Stmodalclose onClick={closeModal}>✖</Stmodalclose>
       <img src={logo} alt="logo" />
       <Sth1> {newAccount ? '회원가입 페이지' : '로그인 페이지'}</Sth1>
 
       <form onSubmit={onSubmit}>
+        {newAccount ? (
+          <Stinput
+            name="displayName"
+            type="displayName"
+            placeholder="닉네임"
+            required
+            value={displayName}
+            onChange={onChange}
+          />
+        ) : null}
+
         <Stinput
           name="email"
           type="email"
@@ -90,6 +111,7 @@ const AuthForm = ({ setSignInModal }) => {
           value={password}
           onChange={onChange}
         />
+
         <div>
           <StLogin type="submit" value={newAccount ? 'Sign In' : 'Log In'} />
           {error}
@@ -101,7 +123,6 @@ const AuthForm = ({ setSignInModal }) => {
           name="google"
         />
       </form>
-
       <StAccount onClick={toggleAccount}>
         {newAccount ? '로그인 하시겠습니까?' : '회원가입 하시겠습니까?'}
       </StAccount>

@@ -2,6 +2,8 @@ import { updateProfile } from 'firebase/auth';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { authService } from '../firebase';
+import { storageService } from '../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 function ProfilePage() {
   const [displayName, setdisplayName] = useState('');
@@ -27,13 +29,39 @@ function ProfilePage() {
     }
   };
 
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState(null);
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+  console.log(image);
+  const handleSumit = () => {
+    const imageRef = ref(storageService, 'image');
+    uploadBytes(imageRef, image)
+      .then(() => {
+        getDownloadURL(imageRef)
+          .then((url) => {
+            setUrl(url);
+          })
+          .catch((error) => {
+            console.log(error.massage, 'error massage');
+          });
+        setImage(null);
+      })
+      .catch((error) => {
+        console.log(error.massage);
+      });
+  };
+
   return (
     <StProfile>
       <StProfileName>프로필페이지</StProfileName>
-      <img src={authService.currentUser?.photoURL} />
       <Stuserprofile> ID : {authService.currentUser?.email}</Stuserprofile>
       <Stuserprofile>
         닉네임 : {authService.currentUser?.displayName}
+        <div></div>
       </Stuserprofile>
       <form onSubmit={onSubmit}>
         <input
@@ -45,6 +73,9 @@ function ProfilePage() {
         ></input>
         <button type="submit">변경하기</button>
       </form>
+      <img src={url} />
+      <input type="file" onChange={handleImageChange} />
+      <button onClick={handleSumit}>Submit</button>
       {error}
     </StProfile>
   );
@@ -69,4 +100,8 @@ const StProfileName = styled.h2`
 `;
 const Stuserprofile = styled.h3`
   margin: auto;
+`;
+
+const Stimg = styled.img`
+  width: 80px;
 `;
