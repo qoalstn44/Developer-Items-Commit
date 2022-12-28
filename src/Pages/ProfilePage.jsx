@@ -81,6 +81,7 @@ function ProfilePage() {
       console.log(result);
     };
   };
+  console.log(authService.currentUser);
   return (
     <StProfile>
       <StDiv>
@@ -90,7 +91,19 @@ function ProfilePage() {
         ) : (
           <StImg src={nullImage} alt="photoURL" />
         )}
-        <Stuserprofile> ID : {authService.currentUser?.email}</Stuserprofile>
+        <Stuserprofile>
+          {authService.currentUser.email ? (
+            <div>ID : {authService.currentUser?.email}</div>
+          ) : (
+            <div>
+              ID :{' '}
+              {
+                authService.currentUser?.reloadUserInfo.providerUserInfo[0]
+                  .email
+              }
+            </div>
+          )}
+        </Stuserprofile>
         <Stuserprofile>
           닉네임 : {name}
           <div></div>

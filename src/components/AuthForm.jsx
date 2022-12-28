@@ -69,6 +69,7 @@ const AuthForm = ({ setSignInModal }) => {
     let provider;
     if (name === 'google') {
       provider = new GoogleAuthProvider();
+      provider.addScope('email');
     }
     await signInWithPopup(authService, provider);
 
