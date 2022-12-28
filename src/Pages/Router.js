@@ -3,11 +3,16 @@ import MainPage from '../Pages/MainPage';
 import PostList from '../Pages/PostList';
 import PostForm from '../Pages/PostForm';
 import Post from '../Pages/Post';
+
+import React from 'react';
+import ProfilePage from './ProfilePage';
+
 import Layout from '../components/mainpage/Layout';
 import AuthTest from './AuthTest';
 import React from 'react';
 import ProfilePage from './ProfilePage';
 import PostModify from '../Pages/PostModify';
+
 
 const AppRouter = () => {
   return (
